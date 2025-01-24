@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day of Week</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 18px;
+        }
+
+        .box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 16px;
+            width: 224px;
+            height: 96px;
+            color: rgba(250, 250, 250, 0.67);
+            background-color: rgba(33, 33, 33, 0.33);
+            -webkit-app-region: drag;
+        }
+
+        span {
+            -webkit-app-region: no-drag;
+            pointer-events: none;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <span id="dayOfWeek"></span><span>_</span><span id="percentsLeft"></span>
+</div>
+
+<script>
+  const DAYS = [
+    "SUN", "MON", "TUE",
+    "WED", "THU", "FRI", "SAT"
+  ];
+
+  const NOW = new Date();
+  const CURRENT_DAY = NOW.getDay();
+
+  const TOTAL_WORK_HOURS = CURRENT_DAY === 5 ? 8 : 9;
+
+  const TOTAL_SECONDS = TOTAL_WORK_HOURS * 60 * 60; // 9 часов (8 рабочих часов + 1 обеденных час)
+
+  const updateDayOfWeek = () => {
+    const NOW = new Date();
+
+    const DAY_OF_WEEK = DAYS[NOW.getDay()];
+    const DOW_REVERSE = DAY_OF_WEEK.split('').reverse().join('');
+
+    window.DAY_OF_WEEK_SPAN.textContent = DOW_REVERSE;
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    window.DAY_OF_WEEK_SPAN = document.getElementById('dayOfWeek');
+    window.PERCENTS_LEFT_SPAN = document.getElementById('percentsLeft');
+
+    updateDayOfWeek();
+    setInterval(updateDayOfWeek, 4 * 60 * 60 * 1000); // Каждые 4 часа
+    setInterval(updatePercentsLeft, 750);
+  });
+
+  function updatePercentsLeft() {
+    const NOW = new Date();
+
+    const CURRENT_DAY = NOW.getDay();
+    const TARGET_TIME = new Date();
+    const WORK_DAY_ENDS_HOURS = CURRENT_DAY === 5 ? 17 : 18
+    TARGET_TIME.setHours(WORK_DAY_ENDS_HOURS, 0, 0, 0);
+
+    const DIFF_MS = TARGET_TIME - NOW;
+    const DIFF_MS_TO_SEC = Math.floor(DIFF_MS / 1000);
+
+    let percentsLeft = 100 - (100 * DIFF_MS_TO_SEC / TOTAL_SECONDS);
+    if (percentsLeft > 0) {
+      percentsLeft = percentsLeft.toFixed(1);
+    }
+    if (percentsLeft < 0) {
+      percentsLeft = '!START';
+    }
+    if (percentsLeft > 100) {
+      percentsLeft = 'END';
+    }
+
+    window.PERCENTS_LEFT_SPAN.textContent = percentsLeft.toString();
+  }
+</script>
+</body>
+</html>
