@@ -23,6 +23,8 @@ app.whenReady().then(() => {
     movable: true,
     focusable: true,
     icon: nativeImage.createFromPath(PATH_TO_ICON),
+    backgroundMaterial: 'acrylic',
+    minimizable: false,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false, // Обязательно для работы с DOM
