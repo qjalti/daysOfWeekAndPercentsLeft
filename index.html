@@ -5,32 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Day of Week</title>
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0;
-            font-family: "JetBrains Mono", monospace;
-            font-size: 18px;
-        }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 18px;
+      }
 
-        .box {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 16px;
-            width: 224px;
-            height: 96px;
-            color: rgba(250, 250, 250, 0.67);
-            background-color: rgba(33, 33, 33, 0.33);
-            -webkit-app-region: drag;
-        }
+      .box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 16px;
+        width: 224px;
+        height: 96px;
+        color: rgba(250, 250, 250, 0.67);
+        background-color: rgba(33, 33, 33, 0.33);
+        -webkit-app-region: drag;
+      }
 
-        span {
-            -webkit-app-region: no-drag;
-            pointer-events: none;
-            user-select: none;
-        }
+      span {
+        -webkit-app-region: no-drag;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      .red {
+        color: #f44336;
+      }
+
+      .deepOrange {
+        color: #ff5722;
+      }
+
+      .orange {
+        color: #ff9800;
+      }
+
+      .yellow {
+        color: #ffeb3b;
+      }
+
+      .green {
+        color: #4caf50;
+      }
     </style>
 </head>
 <body>
@@ -58,6 +78,34 @@
     const DOW_REVERSE = DAY_OF_WEEK.split('').reverse().join('');
 
     window.DAY_OF_WEEK_SPAN.textContent = DOW_REVERSE;
+
+    let colorClass;
+
+    switch (NOW.getDay()) {
+      case 0:
+        colorClass = 'green'
+        break;
+      case 6:
+        colorClass = 'green'
+        break;
+      case 1:
+        colorClass = 'red'
+        break;
+      case 2:
+        colorClass = 'deepOrange'
+        break;
+      case 3:
+        colorClass = 'orange'
+        break;
+      case 4:
+        colorClass = 'yellow'
+        break;
+      case 5:
+        colorClass = 'green'
+        break;
+    }
+
+    window.DAY_OF_WEEK_SPAN.classList.add(colorClass);
   };
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -81,6 +129,7 @@
     const DIFF_MS_TO_SEC = Math.floor(DIFF_MS / 1000);
 
     let percentsLeft = 100 - (100 * DIFF_MS_TO_SEC / TOTAL_SECONDS);
+
     if (percentsLeft > 0) {
       percentsLeft = Math.round(percentsLeft);
     }
@@ -91,7 +140,29 @@
       percentsLeft = 'END';
     }
 
+    let colorClassLF;
+    if (percentsLeft >= 0 && percentsLeft <= 20) {
+      colorClassLF = 'red';
+    }
+
+    if (percentsLeft > 20 && percentsLeft <= 40) {
+      colorClassLF = 'deepOrange';
+    }
+
+    if (percentsLeft > 40 && percentsLeft <= 60) {
+      colorClassLF = 'orange';
+    }
+
+    if (percentsLeft > 60 && percentsLeft <= 80) {
+      colorClassLF = 'yellow';
+    }
+
+    if (percentsLeft > 80 && percentsLeft <= 100) {
+      colorClassLF = 'green';
+    }
+
     window.PERCENTS_LEFT_SPAN.textContent = percentsLeft.toString();
+    window.PERCENTS_LEFT_SPAN.classList.add(colorClassLF);
   }
 </script>
 </body>
