@@ -25,15 +25,15 @@
         font-weight: 900;
       }
 
-      .box {
+      #box {
         display: flex;
         justify-content: center;
         align-items: center;
         border-radius: 16px;
-        width: calc(var(--base-width) - (var(--offset) * 8));
+        width: calc(var(--base-width) - (var(--offset) * 6));
         height: calc(var(--base-height) - (var(--offset) * 8));
         color: rgba(250, 250, 250, 0.67);
-        background-color: rgba(33, 33, 33, 0.33);
+        background-color: rgba(18, 18, 18, 0.33);
         -webkit-app-region: drag;
       }
 
@@ -62,10 +62,33 @@
       .green {
         color: #4caf50;
       }
+
+      /**
+      * Dark Colors
+       */
+      .red-dark {
+        background-color: rgba(49, 35, 34, 0.33) !important;
+      }
+
+      .deep-orange-dark {
+        background-color: rgba(50, 37, 33, 0.33) !important;
+      }
+
+      .orange-dark {
+        background-color: rgba(50, 42, 30, 0.33) !important;
+      }
+
+      .yellow-dark {
+        background-color: rgba(50, 48, 35, 0.33) !important;
+      }
+
+      .green-dark {
+        background-color: rgba(36, 44, 36, 0.33) !important;
+      }
     </style>
 </head>
 <body>
-<div class="box">
+<div id="box">
     <span id="dayOfWeek"></span><span id="percentsLeft"></span>
 </div>
 
@@ -91,42 +114,54 @@
     window.DAY_OF_WEEK_SPAN.textContent = DOW_REVERSE + '_';
 
     let colorClass;
+    let bgColorClass;
 
     switch (NOW.getDay()) {
       case 0:
-        colorClass = 'green'
+        colorClass = 'green';
+        bgColorClass = 'green-dark';
         break;
       case 6:
-        colorClass = 'green'
+        colorClass = 'green';
+        bgColorClass = 'green-dark';
         break;
       case 1:
-        colorClass = 'red'
+        colorClass = 'red';
+        bgColorClass = 'red-dark';
         break;
       case 2:
-        colorClass = 'deepOrange'
+        colorClass = 'deepOrange';
+        bgColorClass = 'deep-orange-dark';
         break;
       case 3:
-        colorClass = 'orange'
+        colorClass = 'orange';
+        bgColorClass = 'orange-dark';
         break;
       case 4:
-        colorClass = 'yellow'
+        colorClass = 'yellow';
+        bgColorClass = 'yellow-dark';
         break;
       case 5:
-        colorClass = 'green'
+        colorClass = 'green';
+        bgColorClass = 'green-dark';
         break;
     }
 
     window.DAY_OF_WEEK_SPAN.setAttribute('class', '');
     window.DAY_OF_WEEK_SPAN.classList.add(colorClass);
+
+    window.BOX_DIV.setAttribute('class', '');
+    window.BOX_DIV.classList.add(bgColorClass);
   };
 
   document.addEventListener('DOMContentLoaded', () => {
     window.DAY_OF_WEEK_SPAN = document.getElementById('dayOfWeek');
     window.PERCENTS_LEFT_SPAN = document.getElementById('percentsLeft');
+    window.BOX_DIV = document.getElementById('box');
 
     updateDayOfWeek();
     setInterval(updateDayOfWeek, 4 * 60 * 60 * 1000); // Каждые 4 часа
-    setInterval(updatePercentsLeft, 750);
+    setInterval(updatePercentsLeft, 1000);
   });
 
   function updatePercentsLeft() {
@@ -143,7 +178,8 @@
     let percentsLeft = 100 - (100 * DIFF_MS_TO_SEC / TOTAL_SECONDS);
 
     if (percentsLeft > 0) {
-      percentsLeft = Math.round(percentsLeft);
+      percentsLeft = percentsLeft.toFixed(2);
+      // percentsLeft = Math.round(percentsLeft);
     }
     if (percentsLeft < 0) {
       percentsLeft = '!START';
