@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +9,31 @@
         --base-width: 192px;
         --base-height: 128px;
         --offset: 8px;
+        --main-width: calc(var(--base-width) - (var(--offset) * 6));
+        --main-height: calc(var(--base-height) - (var(--offset) * 8));
+
+        --main-border-radius: 16px;
+
+        /**
+        * Colors
+         */
+        --red: 244, 67, 54;
+        --deep-orange: 255, 87, 34;
+        --orange: 255, 152, 0;
+        --yellow: 255, 235, 59;
+        --green: 76, 175, 80;
+        --blue: 33, 150, 243;
+
+        /**
+        * Dark colors
+         */
+        --dark-colors-opacity: 0.67;
+        --light-colors-opacity: 0.33;
+        --red-dark: rgba(49, 35, 34, var(--dark-colors-opacity));
+        --deep-orange-dark: rgba(50, 37, 33, var(--dark-colors-opacity));
+        --orange-dark: rgba(50, 42, 30, var(--dark-colors-opacity));
+        --yellow-dark: rgba(50, 48, 35, var(--dark-colors-opacity));
+        --green-dark: rgba(36, 44, 36, var(--dark-colors-opacity));
       }
 
       * {
@@ -26,12 +51,13 @@
       }
 
       #box {
-        display: flex;
+        display: none;
+        /*display: flex;*/
         justify-content: center;
         align-items: center;
-        border-radius: 16px;
-        width: calc(var(--base-width) - (var(--offset) * 6));
-        height: calc(var(--base-height) - (var(--offset) * 8));
+        border-radius: var(--main-border-radius);
+        width: var(--main-width);
+        height: var(--main-height);
         color: rgba(250, 250, 250, 0.67);
         background-color: rgba(18, 18, 18, 0.33);
         -webkit-app-region: drag;
@@ -44,58 +70,115 @@
       }
 
       .red {
-        color: #f44336;
+        color: var(--red);
       }
 
       .deepOrange {
-        color: #ff5722;
+        color: var(--deep-orange);
       }
 
       .orange {
-        color: #ff9800;
+        color: var(--orange);
       }
 
       .yellow {
-        color: #ffeb3b;
+        color: var(--yellow);
       }
 
       .green {
-        color: #4caf50;
+        color: var(--green);
+      }
+
+      .blue {
+        color: var(--blue);
       }
 
       /**
-      * Dark Colors
+      * Light colors
+       */
+      .red-light {
+        background-color: rgba(var(--red), var(--light-colors-opacity)) !important;
+      }
+
+      .deep-orange-light {
+        background-color: rgba(var(--deep-orange), var(--light-colors-opacity)) !important;
+      }
+
+      .orange-light {
+        background-color: rgba(var(--orange), var(--light-colors-opacity)) !important;
+      }
+
+      .yellow-light {
+        background-color: rgba(var(--yellow), var(--light-colors-opacity)) !important;
+      }
+
+      .green-light {
+        background-color: rgba(var(--green), var(--light-colors-opacity)) !important;
+      }
+
+      .blue-light {
+        background-color: rgba(var(--blue), var(--light-colors-opacity)) !important;
+      }
+
+      /**
+      * Dark colors
        */
       .red-dark {
-        background-color: rgba(49, 35, 34, 0.33) !important;
+        background-color: var(--red-dark) !important;
       }
 
       .deep-orange-dark {
-        background-color: rgba(50, 37, 33, 0.33) !important;
+        background-color: var(--deep-orange-dark) !important;
       }
 
       .orange-dark {
-        background-color: rgba(50, 42, 30, 0.33) !important;
+        background-color: var(--orange-dark) !important;
       }
 
       .yellow-dark {
-        background-color: rgba(50, 48, 35, 0.33) !important;
+        background-color: var(--yellow-dark) !important;
       }
 
       .green-dark {
-        background-color: rgba(36, 44, 36, 0.33) !important;
+        background-color: var(--green-dark) !important;
+      }
+
+      #new-box {
+        display: flex;
+        -webkit-app-region: drag;
+      }
+
+      #new-DoW, #new-PF {
+        width: calc(var(--main-width) / 2);
+        height: var(--main-height);
+        border-radius: var(--main-border-radius);
+      }
+
+      #new-DoW {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      #new-PF {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
       }
     </style>
 </head>
 <body>
+
+<div id="new-box">
+    <div id="new-DoW"></div>
+    <div id="new-PF"></div>
+</div>
+
 <div id="box">
     <span id="dayOfWeek"></span><span id="percentsLeft"></span>
 </div>
 
 <script>
   const DAYS = [
-    "SUN", "MON", "TUE",
-    "WED", "THU", "FRI", "SAT"
+    'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'
   ];
 
   const NOW = new Date();
@@ -119,31 +202,31 @@
     switch (NOW.getDay()) {
       case 0:
         colorClass = 'green';
-        bgColorClass = 'green-dark';
+        bgColorClass = 'green-light';
         break;
       case 6:
         colorClass = 'green';
-        bgColorClass = 'green-dark';
+        bgColorClass = 'green-light';
         break;
       case 1:
         colorClass = 'red';
-        bgColorClass = 'red-dark';
+        bgColorClass = 'red-light';
         break;
       case 2:
         colorClass = 'deepOrange';
-        bgColorClass = 'deep-orange-dark';
+        bgColorClass = 'deep-orange-light';
         break;
       case 3:
         colorClass = 'orange';
-        bgColorClass = 'orange-dark';
+        bgColorClass = 'orange-light';
         break;
       case 4:
         colorClass = 'yellow';
-        bgColorClass = 'yellow-dark';
+        bgColorClass = 'yellow-light';
         break;
       case 5:
         colorClass = 'green';
-        bgColorClass = 'green-dark';
+        bgColorClass = 'green-light';
         break;
     }
 
@@ -152,15 +235,23 @@
 
     window.BOX_DIV.setAttribute('class', '');
     window.BOX_DIV.classList.add(bgColorClass);
+
+    window.NEW_DOW_DIV.setAttribute('class', '');
+    window.NEW_DOW_DIV.classList.add(bgColorClass);
   };
 
   document.addEventListener('DOMContentLoaded', () => {
     window.DAY_OF_WEEK_SPAN = document.getElementById('dayOfWeek');
     window.PERCENTS_LEFT_SPAN = document.getElementById('percentsLeft');
     window.BOX_DIV = document.getElementById('box');
+    window.TEMPERATURE_SPAN = document.getElementById('temperature');
+
+    window.NEW_BOX_DIV = document.getElementById('new-box');
+    window.NEW_DOW_DIV = document.getElementById('new-DoW');
+    window.NEW_PF_DIV = document.getElementById('new-PF');
 
     updateDayOfWeek();
-    setInterval(updateDayOfWeek, 4 * 60 * 60 * 1000); // Каждые 4 часа
+    setInterval(updateDayOfWeek, 4 * 60 * 60 * 1000); // every 4 hours
     setInterval(updatePercentsLeft, 1000);
   });
 
@@ -189,29 +280,39 @@
     }
 
     let colorClassLF;
+    let bgColorClassLF = 'blue-light';
+
     if (percentsLeft >= 0 && percentsLeft <= 20) {
       colorClassLF = 'red';
+      bgColorClassLF = 'red-light';
     }
 
     if (percentsLeft > 20 && percentsLeft <= 40) {
       colorClassLF = 'deepOrange';
+      bgColorClassLF = 'deep-orange-light';
     }
 
     if (percentsLeft > 40 && percentsLeft <= 60) {
       colorClassLF = 'orange';
+      bgColorClassLF = 'orange-light';
     }
 
     if (percentsLeft > 60 && percentsLeft <= 80) {
       colorClassLF = 'yellow';
+      bgColorClassLF = 'yellow-light';
     }
 
     if (percentsLeft > 80 && percentsLeft <= 100) {
       colorClassLF = 'green';
+      bgColorClassLF = 'green-light';
     }
 
     window.PERCENTS_LEFT_SPAN.textContent = '_' + percentsLeft.toString();
     window.PERCENTS_LEFT_SPAN.setAttribute('class', '');
     window.PERCENTS_LEFT_SPAN.classList.add(colorClassLF);
+
+    window.NEW_PF_DIV.setAttribute('class', '');
+    window.NEW_PF_DIV.classList.add(bgColorClassLF);
   }
 </script>
 </body>
