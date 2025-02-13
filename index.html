@@ -23,6 +23,7 @@
         --yellow: 255, 235, 59;
         --green: 76, 175, 80;
         --blue: 33, 150, 243;
+        --purple: 156, 39, 176;
 
         /**
         * Dark colors
@@ -118,6 +119,10 @@
 
       .blue-light {
         background-color: rgba(var(--blue), var(--light-colors-opacity)) !important;
+      }
+
+      .purple-light {
+        background-color: rgba(var(--purple), var(--light-colors-opacity)) !important;
       }
 
       /**
@@ -280,7 +285,7 @@
     }
 
     let colorClassLF;
-    let bgColorClassLF = 'blue-light';
+    let bgColorClassLF = 'purple-light';
 
     if (percentsLeft >= 0 && percentsLeft <= 20) {
       colorClassLF = 'red';
