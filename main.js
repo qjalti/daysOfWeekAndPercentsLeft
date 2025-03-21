@@ -13,8 +13,8 @@ let tray = null;
 
 app.whenReady().then(() => {
   win = new BrowserWindow({
-    width: 256 - (8 * 2),
-    height: 128 - (8 * 2),
+    width: 256 - (8 * 14),
+    height: 128 - (8 * 14),
     frame: false,
     alwaysOnTop: true,
     transparent: true,
