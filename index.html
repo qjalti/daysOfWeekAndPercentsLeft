@@ -182,7 +182,7 @@
 </div>
 
 <script>
-  const AUDIO = new Audio('assets/todo.wav');
+  window.AUDIO = new Audio('assets/todo.wav');
 
   const DAYS = [
     'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'
@@ -312,7 +312,7 @@
     if (percentsLeft >= 90 && percentsLeft <= 100) {
       colorClassLF = 'green';
       bgColorClassLF = 'green-light';
-      AUDIO.play();
+      window.AUDIO.play();
     }
 
     window.PERCENTS_LEFT_SPAN.textContent = '_' + percentsLeft.toString();
