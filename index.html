@@ -182,6 +182,8 @@
 </div>
 
 <script>
+  const AUDIO = new Audio('assets/todo.wav');
+
   const DAYS = [
     'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'
   ];
@@ -287,29 +289,30 @@
     let colorClassLF;
     let bgColorClassLF = 'purple-light';
 
-    if (percentsLeft >= 0 && percentsLeft <= 20) {
+    if (percentsLeft >= 0 && percentsLeft < 20) {
       colorClassLF = 'red';
       bgColorClassLF = 'red-light';
     }
 
-    if (percentsLeft > 20 && percentsLeft <= 40) {
+    if (percentsLeft >= 20 && percentsLeft < 40) {
       colorClassLF = 'deepOrange';
       bgColorClassLF = 'deep-orange-light';
     }
 
-    if (percentsLeft > 40 && percentsLeft <= 60) {
+    if (percentsLeft >= 40 && percentsLeft < 60) {
       colorClassLF = 'orange';
       bgColorClassLF = 'orange-light';
     }
 
-    if (percentsLeft > 60 && percentsLeft <= 80) {
+    if (percentsLeft >= 60 && percentsLeft < 90) {
       colorClassLF = 'yellow';
       bgColorClassLF = 'yellow-light';
     }
 
-    if (percentsLeft > 80 && percentsLeft <= 100) {
+    if (percentsLeft >= 90 && percentsLeft <= 100) {
       colorClassLF = 'green';
       bgColorClassLF = 'green-light';
+      AUDIO.play();
     }
 
     window.PERCENTS_LEFT_SPAN.textContent = '_' + percentsLeft.toString();
