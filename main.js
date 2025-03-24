@@ -3,18 +3,19 @@ const {
   BrowserWindow,
   Tray,
   Menu,
-  nativeImage
+  nativeImage,
 } = require('electron');
 
-const PATH_TO_ICON = './counter.ico';
+const PATH_TO_ICON = './assets/icon.ico';
+const PATH_TO_TRAY_ICON = './assets/tray_icon.ico';
 
 let win;
 let tray = null;
 
 app.whenReady().then(() => {
   win = new BrowserWindow({
-    width: 256 - (8 * 14),
-    height: 128 - (8 * 14),
+    width: 256 - (8 * 12),
+    height: 128 - (8 * 12),
     frame: false,
     alwaysOnTop: true,
     transparent: true,
@@ -27,11 +28,11 @@ app.whenReady().then(() => {
     minimizable: false,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false, // Обязательно для работы с DOM
+      contextIsolation: false,
     },
   });
 
-  tray = new Tray(nativeImage.createFromPath(PATH_TO_ICON));
+  tray = new Tray(nativeImage.createFromPath(PATH_TO_TRAY_ICON));
 
   const CONTEXT_MENU = Menu.buildFromTemplate([
     {

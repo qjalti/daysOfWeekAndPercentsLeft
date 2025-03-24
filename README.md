@@ -1,4 +1,13 @@
-# DayOfWeekAndPercentsLeft app
+# DayOfWeekAndPercentsLeft App
+
+This is an Electron app that displays the day of the week and the percentage of remaining time
+
+---
+
+## Содержание
+
+1. [Commands](#commands)
+2. [npm run build description](#npm-run-build-description)
 
 ## Notes
 
@@ -19,8 +28,10 @@ npm install electron-packager -g
 Pack project:
 
 ```bash
-electron-packager . DayOfWeekApp --platform=win32 --arch=x64 --overwrite
+npm run build
 ```
+
+### npm run build description
 
 - **`electron-packager`**
 
@@ -61,3 +72,9 @@ electron-packager . DayOfWeekApp --platform=win32 --arch=x64 --overwrite
       конфигурацией, его нужно перезаписать
 
     - Без этого флага команда может выдать ошибку, если пакет уже существует
+
+- **`--icon=assets/icon.ico`**
+
+    - Указывает путь к файлу иконки в формате .ico, который будет использоваться
+      для исполняемого файла .exe. Если этот параметр не указан, Electron
+      Packager будет использовать стандартную иконку Electron
