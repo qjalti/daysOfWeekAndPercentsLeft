@@ -4,7 +4,13 @@ const {
   Tray,
   Menu,
   nativeImage,
+  ipcMain,
+  Notification
 } = require('electron');
+
+const PATH = require('path');
+const {exec} = require('child_process');
+const player = require('node-wav-player');
 
 const PATH_TO_ICON = './assets/icon.ico';
 const PATH_TO_TRAY_ICON = './assets/tray_icon.ico';
@@ -28,7 +34,8 @@ app.whenReady().then(() => {
     minimizable: false,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false,
+      contextIsolation: true,
+      preload: PATH.join(__dirname, 'preload.js'),
     },
   });
 
@@ -55,3 +62,29 @@ app.whenReady().then(() => {
 
   win.loadFile('index.html').then(() => false);
 });
+
+
+ipcMain.on('play-sound', () => {
+  playSound();
+});
+
+const playSound = () => {
+  const soundPath = PATH.join(__dirname, 'assets/todo.wav');
+
+  if (process.platform === 'win32') {
+    player.play({path: soundPath}).catch(err => console.error('Ошибка воспроизведения:', err));
+  } else if (process.platform === 'darwin') {
+    exec(`afplay "${soundPath}"`);
+  } else {
+    exec(`aplay "${soundPath}"`);
+  }
+  showNotification();
+}
+
+const showNotification = () => {
+  const notif = new Notification({
+    title: '████████',
+    body: '██ █████ ████████ ███ < 1H'
+  });
+  notif.show();
+}

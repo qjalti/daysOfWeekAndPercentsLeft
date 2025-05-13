@@ -342,7 +342,7 @@
       colorClassLF = 'green';
       bgColorClassLF = 'green-light';
       if (!window.AUDIO_PLAYED) {
-        window.AUDIO.play();
+        window.electronAPI.playSound();
         window.AUDIO_PLAYED = true;
       }
     }

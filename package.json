@@ -12,5 +12,8 @@
   "description": "",
   "devDependencies": {
     "electron": "^34.0.1"
+  },
+  "dependencies": {
+    "node-wav-player": "^1.0.0"
   }
 }
