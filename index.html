@@ -230,7 +230,7 @@
 
       const json = await response.json();
       window.TEMPERATURE_SPAN.innerText =
-        ` :: ${json.data[0].temperature}\u00B0C :: ${DATA.current.temperature_2m +
+        ` :: ${parseInt(json.data[0].temperature)}\u00B0C :: ${DATA.current.temperature_2m.toFixed(0) +
         DATA.current_units.temperature_2m}`;
     } catch (error) {
       window.TEMPERATURE_SPAN.innerText = 'Ошибка';
