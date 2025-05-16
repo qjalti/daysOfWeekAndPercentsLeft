@@ -193,7 +193,14 @@
     <div id="temperatureValue"></div>
 </div>
 
+<div id="temperatureBoxOutdoor">
+    <div id="temperatureValueOutdoor"></div>
+</div>
+
 <script>
+  const LA = '55.80852';
+  const LO = '37.70758';
+
   window.AUDIO = new Audio('assets/todo.wav');
   window.AUDIO_PLAYED = false;
 
@@ -209,6 +216,11 @@
   const TOTAL_SECONDS = TOTAL_WORK_HOURS * 60 * 60; // 9 часов (8 рабочих часов + 1 обеденных час)
 
   const updateTemperature = async () => {
+    const RESPONSE = await fetch(
+      `https://api.open-meteo.com/v1/forecast?latitude=${LA}&longitude=${LO}&current=temperature_2m`
+    );
+    const DATA = await RESPONSE.json();
+
     const url = 'https://qjalti.ru/api/arduino/select';
     try {
       const response = await fetch(url, {method: 'POST'});
@@ -217,7 +229,9 @@
       }
 
       const json = await response.json();
-      window.TEMPERATURE_SPAN.innerText = `${json.data[0].temperature}\u00B0C`;
+      window.TEMPERATURE_SPAN.innerText =
+        ` :: ${json.data[0].temperature}\u00B0C :: ${DATA.current.temperature_2m +
+        DATA.current_units.temperature_2m}`;
     } catch (error) {
       window.TEMPERATURE_SPAN.innerText = 'Ошибка';
     }
@@ -280,6 +294,8 @@
     window.PERCENTS_LEFT_SPAN = document.getElementById('percentsLeft');
     window.BOX_DIV = document.getElementById('box');
     window.TEMPERATURE_SPAN = document.getElementById('temperatureValue');
+    window.TEMPERATURE_OUTDOOR_SPAN =
+      document.getElementById('temperatureValueOutdoor');
 
     window.NEW_BOX_DIV = document.getElementById('new-box');
     window.NEW_DOW_DIV = document.getElementById('new-DoW');
