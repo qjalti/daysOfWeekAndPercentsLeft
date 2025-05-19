@@ -219,25 +219,33 @@
   const TOTAL_SECONDS = TOTAL_WORK_HOURS * 60 * 60; // 9 часов (8 рабочих часов + 1 обеденных час)
 
   const updateTemperature = async () => {
-    const RESPONSE = await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${LA}&longitude=${LO}&current=temperature_2m`
+    const OUTDOOR_TEMP_RES = await fetch(
+      `https://api.weatherapi.com/v1/current.json?key=02a4a0e085aa4d95a1d90957251905&q=${LA},${LO}`,
+      {
+        method: 'POST'
+      },
     );
-    const DATA = await RESPONSE.json();
 
-    const url = 'https://qjalti.ru/api/arduino/select';
-    try {
-      const response = await fetch(url, {method: 'POST'});
-      if (!response.ok) {
-        window.TEMPERATURE_SPAN.innerText = 'Ошибка';
-      }
-
-      const json = await response.json();
-      window.TEMPERATURE_SPAN.innerText =
-        ` :: ${parseInt(json.data[0].temperature)}\u00B0C :: ${DATA.current.temperature_2m.toFixed(0) +
-        DATA.current_units.temperature_2m}`;
-    } catch (error) {
-      window.TEMPERATURE_SPAN.innerText = 'Ошибка';
+    let outdoorTemp;
+    if (!OUTDOOR_TEMP_RES.ok) {
+      outdoorTemp = 'Ошибка';
+    } else {
+      const OUTDOOR_TEMP_JSON = await OUTDOOR_TEMP_RES.json();
+      outdoorTemp = OUTDOOR_TEMP_JSON.current.temp_c.toFixed(0);
     }
+
+    const INDOOR_TEMP_RES = await fetch('https://qjalti.ru/api/arduino/select', {method: 'POST'});
+
+    let indoorTemp;
+    if (!INDOOR_TEMP_RES.ok) {
+      indoorTemp = 'Ошибка';
+    } else {
+      const INDOOR_TEMP_JSON = await INDOOR_TEMP_RES.json();
+      indoorTemp = parseInt(INDOOR_TEMP_JSON.data[0].temperature);
+    }
+
+    window.TEMPERATURE_SPAN.innerText =
+      ` :: ${indoorTemp}\u00B0C :: ${outdoorTemp}\u00B0C`;
   };
 
   const updateDayOfWeek = () => {

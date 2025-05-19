@@ -38,6 +38,7 @@ app.whenReady().then(() => {
       preload: PATH.join(__dirname, 'preload.js'),
     },
   });
+  // win.webContents.openDevTools();
 
   tray = new Tray(nativeImage.createFromPath(PATH_TO_TRAY_ICON));
 
