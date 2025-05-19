@@ -305,6 +305,8 @@
     window.NEW_PF_DIV = document.getElementById('new-PF');
 
     updateDayOfWeek();
+    updatePercentsLeft();
+    updateTemperature();
     setInterval(updateDayOfWeek, 4 * 60 * 60 * 1000); // every 4 hours
     setInterval(updatePercentsLeft, 1000);
     setInterval(updateTemperature, 1000 * 60 * 15);
