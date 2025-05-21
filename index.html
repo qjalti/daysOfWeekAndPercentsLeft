@@ -70,6 +70,7 @@
 
       .site:not(:last-child):after {
         content: " :: ";
+        color: rgba(255, 255, 255, 0.625) !important;
       }
 
       .red {
@@ -218,11 +219,11 @@
   const checkServersStatus = async () => {
     const SITES = [
       {
-        name: 'P',
+        name: 'PCL',
         url: 'https://patriot-cl.ru/',
       },
       {
-        name: 'SH',
+        name: 'SHD',
         url: 'https://shvey-dom.ru/',
       },
       {
@@ -234,11 +235,11 @@
         url: 'https://snb.group/',
       },
       {
-        name: 'RT',
+        name: 'RTE',
         url: 'https://rodiyar.tech/',
       },
       {
-        name: 'OO',
+        name: 'OHO',
         url: 'https://ohrana-objective.ru/',
       },
     ];
@@ -291,7 +292,6 @@
     const NOW = new Date();
 
     const DAY_OF_WEEK = DAYS[NOW.getDay()];
-    const DOW_REVERSE = DAY_OF_WEEK.split('').reverse().join('');
 
     let colorClass;
     let bgColorClass;
@@ -364,7 +364,6 @@
 
     if (percentsLeft > 0) {
       percentsLeft = percentsLeft.toFixed(2);
-      // percentsLeft = Math.round(percentsLeft);
     }
     if (percentsLeft < 0) {
       percentsLeft = '!START';
@@ -373,31 +372,25 @@
       percentsLeft = 'END';
     }
 
-    let colorClassLF;
     let bgColorClassLF = 'purple-light';
 
     if (percentsLeft >= 0 && percentsLeft < 20) {
-      colorClassLF = 'red';
       bgColorClassLF = 'red-light';
     }
 
     if (percentsLeft >= 20 && percentsLeft < 40) {
-      colorClassLF = 'deepOrange';
       bgColorClassLF = 'deep-orange-light';
     }
 
     if (percentsLeft >= 40 && percentsLeft < 60) {
-      colorClassLF = 'orange';
       bgColorClassLF = 'orange-light';
     }
 
     if (percentsLeft >= 60 && percentsLeft < 90) {
-      colorClassLF = 'yellow';
       bgColorClassLF = 'yellow-light';
     }
 
     if (percentsLeft >= 85 && percentsLeft <= 100) {
-      colorClassLF = 'green';
       bgColorClassLF = 'green-light';
       if (!window.AUDIO_PLAYED) {
         window.electronAPI.playSound();
