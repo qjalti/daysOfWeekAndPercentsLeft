@@ -11,7 +11,6 @@
         --offset: 8px;
         --main-width: calc(var(--base-width) - (var(--offset) * 18));
         --main-height: calc(var(--base-height) - (var(--offset) * 14));
-
         --main-border-radius: 8px;
 
         /**
@@ -69,28 +68,32 @@
         user-select: none;
       }
 
+      .site:not(:last-child):after {
+        content: " :: ";
+      }
+
       .red {
-        color: var(--red);
+        color: rgba(var(--red), 0.875);
       }
 
       .deepOrange {
-        color: var(--deep-orange);
+        color: rgba(var(--deep-orange), 0.875);
       }
 
       .orange {
-        color: var(--orange);
+        color: rgba(var(--orange), 0.875);
       }
 
       .yellow {
-        color: var(--yellow);
+        color: rgba(var(--yellow), 0.875);
       }
 
       .green {
-        color: var(--green);
+        color: rgba(var(--green), 0.875);
       }
 
       .blue {
-        color: var(--blue);
+        color: rgba(var(--blue), 0.875);
       }
 
       /**
@@ -170,7 +173,7 @@
 
       #temperatureBox {
         -webkit-app-region: drag;
-        padding: 8px;
+        padding: 0 8px;
         color: rgba(255, 255, 255, 0.625);
         filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.375));
         cursor: default;
@@ -185,17 +188,11 @@
     <div id="new-PF"></div>
 </div>
 
-<div id="box">
-    <span id="dayOfWeek"></span><span id="percentsLeft"></span>
-</div>
-
 <div id="temperatureBox">
     <div id="temperatureValue"></div>
 </div>
 
-<div id="temperatureBoxOutdoor">
-    <div id="temperatureValueOutdoor"></div>
-</div>
+<div id="statusesBox"></div>
 
 <script>
   // const LA = '55.80852';
@@ -217,6 +214,48 @@
   const TOTAL_WORK_HOURS = CURRENT_DAY === 5 ? 8 : 9;
 
   const TOTAL_SECONDS = TOTAL_WORK_HOURS * 60 * 60; // 9 часов (8 рабочих часов + 1 обеденных час)
+
+  const checkServersStatus = async () => {
+    const SITES = [
+      {
+        name: 'P',
+        url: 'https://patriot-cl.ru/',
+      },
+      {
+        name: 'SH',
+        url: 'https://shvey-dom.ru/',
+      },
+      {
+        name: 'RTR',
+        url: 'https://rodiyartech.ru/',
+      },
+      {
+        name: 'SNB',
+        url: 'https://snb.group/',
+      },
+      {
+        name: 'RT',
+        url: 'https://rodiyar.tech/',
+      },
+      {
+        name: 'OO',
+        url: 'https://ohrana-objective.ru/',
+      },
+    ];
+
+    while (window.STATUSES_BOX.firstChild) {
+      window.STATUSES_BOX.removeChild(window.STATUSES_BOX.firstChild);
+    }
+
+    SITES.map(async (el) => {
+      const STATUS = await fetch(el.url, {method: 'HEAD'});
+      const SITE_STATUS = document.createElement('span');
+      SITE_STATUS.classList.add('site');
+      SITE_STATUS.classList.add(STATUS.ok ? 'green' : 'red');
+      SITE_STATUS.textContent = el.name;
+      window.STATUSES_BOX.appendChild(SITE_STATUS);
+    });
+  };
 
   const updateTemperature = async () => {
     const OUTDOOR_TEMP_RES = await fetch(
@@ -245,7 +284,7 @@
     }
 
     window.TEMPERATURE_SPAN.innerText =
-      ` :: ${indoorTemp}\u00B0C :: ${outdoorTemp}\u00B0C`;
+      ` :: ${indoorTemp}\u00B0C :: ${outdoorTemp}\u00B0C ::`;
   };
 
   const updateDayOfWeek = () => {
@@ -253,8 +292,6 @@
 
     const DAY_OF_WEEK = DAYS[NOW.getDay()];
     const DOW_REVERSE = DAY_OF_WEEK.split('').reverse().join('');
-
-    window.DAY_OF_WEEK_SPAN.textContent = DOW_REVERSE + '_';
 
     let colorClass;
     let bgColorClass;
@@ -290,23 +327,13 @@
         break;
     }
 
-    window.DAY_OF_WEEK_SPAN.setAttribute('class', '');
-    window.DAY_OF_WEEK_SPAN.classList.add(colorClass);
-
-    window.BOX_DIV.setAttribute('class', '');
-    window.BOX_DIV.classList.add(bgColorClass);
-
     window.NEW_DOW_DIV.setAttribute('class', '');
     window.NEW_DOW_DIV.classList.add(bgColorClass);
   };
 
   document.addEventListener('DOMContentLoaded', () => {
-    window.DAY_OF_WEEK_SPAN = document.getElementById('dayOfWeek');
-    window.PERCENTS_LEFT_SPAN = document.getElementById('percentsLeft');
-    window.BOX_DIV = document.getElementById('box');
     window.TEMPERATURE_SPAN = document.getElementById('temperatureValue');
-    window.TEMPERATURE_OUTDOOR_SPAN =
-      document.getElementById('temperatureValueOutdoor');
+    window.STATUSES_BOX = document.getElementById('statusesBox');
 
     window.NEW_BOX_DIV = document.getElementById('new-box');
     window.NEW_DOW_DIV = document.getElementById('new-DoW');
@@ -315,9 +342,11 @@
     updateDayOfWeek();
     updatePercentsLeft();
     updateTemperature();
+    checkServersStatus();
     setInterval(updateDayOfWeek, 4 * 60 * 60 * 1000); // every 4 hours
     setInterval(updatePercentsLeft, 1000);
     setInterval(updateTemperature, 1000 * 60 * 15);
+    setInterval(checkServersStatus, 1000 * 60 * 5);
   });
 
   function updatePercentsLeft() {
@@ -379,10 +408,6 @@
     if (percentsLeft === 91) {
       window.AUDIO_PLAYED = false;
     }
-
-    window.PERCENTS_LEFT_SPAN.textContent = '_' + percentsLeft.toString();
-    window.PERCENTS_LEFT_SPAN.setAttribute('class', '');
-    window.PERCENTS_LEFT_SPAN.classList.add(colorClassLF);
 
     window.NEW_PF_DIV.setAttribute('class', '');
     window.NEW_PF_DIV.classList.add(bgColorClassLF);
