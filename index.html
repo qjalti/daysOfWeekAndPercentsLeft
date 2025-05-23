@@ -44,14 +44,13 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 0;
         font-family: "JetBrains Mono", monospace;
         font-size: 14px;
+        margin: 2px;
       }
 
       #box {
         display: none;
-        /*display: flex;*/
         justify-content: center;
         align-items: center;
         border-radius: var(--main-border-radius);
@@ -180,6 +179,19 @@
         cursor: default;
         user-select: none;
       }
+
+      #temperatureBox .temp {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+      }
+
+      #temperatureBox .temp svg {
+        width: 18px;
+        height: 18px;
+        fill: rgba(250, 250, 250, 0.625);
+      }
     </style>
 </head>
 <body>
@@ -190,6 +202,28 @@
 </div>
 
 <div id="temperatureBox">
+    <div class="temp">
+        <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 -960 960 960"
+        >
+            <path
+                    d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"
+            />
+        </svg>
+        <span id="indoorTemp"></span>
+        ::
+        <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 -960 960 960"
+        >
+            <path
+                    d="M200-80v-80h240v-160h-80q-83 0-141.5-58.5T160-520q0-60 33-110.5t89-73.5q9-75 65.5-125.5T480-880q76 0 132.5 50.5T678-704q56 23 89 73.5T800-520q0 83-58.5 141.5T600-320h-80v160h240v80H200Zm160-320h240q50 0 85-35t35-85q0-36-20.5-66T646-630l-42-18-6-46q-6-45-39.5-75.5T480-800q-45 0-78.5 30.5T362-694l-6 46-42 18q-33 14-53.5 44T240-520q0 50 35 85t85 35Zm120-200Z"
+            />
+        </svg>
+        <span id="outdoorTemp"></span>
+        ::
+    </div>
     <div id="temperatureValue"></div>
 </div>
 
@@ -284,8 +318,11 @@
       indoorTemp = parseInt(INDOOR_TEMP_JSON.data[0].temperature);
     }
 
-    window.TEMPERATURE_SPAN.innerText =
-      ` :: ${indoorTemp}\u00B0C :: ${outdoorTemp}\u00B0C ::`;
+    console.dir(window.OUTDOOR_TEMP_VALUE);
+    console.dir(outdoorTemp);
+
+    window.OUTDOOR_TEMP_VALUE.innerHTML = outdoorTemp + '\u00B0C';
+    window.INDOOR_TEMP_VALUE.innerHTML = indoorTemp + '\u00B0C';
   };
 
   const updateDayOfWeek = () => {
@@ -332,7 +369,9 @@
   };
 
   document.addEventListener('DOMContentLoaded', () => {
-    window.TEMPERATURE_SPAN = document.getElementById('temperatureValue');
+    window.INDOOR_TEMP_VALUE = document.getElementById('indoorTemp');
+    window.OUTDOOR_TEMP_VALUE = document.getElementById('outdoorTemp');
+
     window.STATUSES_BOX = document.getElementById('statusesBox');
 
     window.NEW_BOX_DIV = document.getElementById('new-box');
