@@ -227,7 +227,14 @@
     <div id="temperatureValue"></div>
 </div>
 
-<div id="statusesBox"></div>
+<div id="statusesBox">
+    <span id="PCL" class="site yellow">PCL</span>
+    <span id="SHD" class="site yellow">SHD</span>
+    <span id="RTR" class="site yellow">RTR</span>
+    <span id="SNB" class="site yellow">SNB</span>
+    <span id="RTE" class="site yellow">RTE</span>
+    <span id="OHO" class="site yellow">OHO</span>
+</div>
 
 <script>
   // const LA = '55.80852';
@@ -235,6 +242,8 @@
 
   const LA = '55.81160';
   const LO = '37.79113';
+
+  const SITE_STATUSES_UPDATE_TIMEOUT = 1000 * 60 * 5;
 
   window.AUDIO = new Audio('assets/todo.wav');
   window.AUDIO_PLAYED = false;
@@ -278,17 +287,18 @@
       },
     ];
 
-    while (window.STATUSES_BOX.firstChild) {
-      window.STATUSES_BOX.removeChild(window.STATUSES_BOX.firstChild);
-    }
-
     SITES.map(async (el) => {
+      const CURRENT_SITE = document.querySelector(`#${el.name}`);
+      if (CURRENT_SITE.classList.contains('green')) {
+        CURRENT_SITE.classList.remove('green');
+      }
+      if (CURRENT_SITE.classList.contains('red')) {
+        CURRENT_SITE.classList.remove('red');
+      }
+      CURRENT_SITE.classList.add('yellow');
       const STATUS = await fetch(el.url, {method: 'HEAD'});
-      const SITE_STATUS = document.createElement('span');
-      SITE_STATUS.classList.add('site');
-      SITE_STATUS.classList.add(STATUS.ok ? 'green' : 'red');
-      SITE_STATUS.textContent = el.name;
-      window.STATUSES_BOX.appendChild(SITE_STATUS);
+      CURRENT_SITE.classList.remove('yellow');
+      CURRENT_SITE.classList.add(STATUS.ok ? 'green' : 'red');
     });
   };
 
@@ -308,7 +318,12 @@
       outdoorTemp = OUTDOOR_TEMP_JSON.current.temp_c.toFixed(0);
     }
 
-    const INDOOR_TEMP_RES = await fetch('https://qjalti.ru/api/arduino/select', {method: 'POST'});
+    const INDOOR_TEMP_RES = await fetch(
+      'https://qjalti.ru/api/arduino/select',
+      {
+        method: 'POST'
+      }
+    );
 
     let indoorTemp;
     if (!INDOOR_TEMP_RES.ok) {
@@ -317,9 +332,6 @@
       const INDOOR_TEMP_JSON = await INDOOR_TEMP_RES.json();
       indoorTemp = parseInt(INDOOR_TEMP_JSON.data[0].temperature);
     }
-
-    console.dir(window.OUTDOOR_TEMP_VALUE);
-    console.dir(outdoorTemp);
 
     window.OUTDOOR_TEMP_VALUE.innerHTML = outdoorTemp + '\u00B0C';
     window.INDOOR_TEMP_VALUE.innerHTML = indoorTemp + '\u00B0C';
@@ -385,7 +397,7 @@
     setInterval(updateDayOfWeek, 4 * 60 * 60 * 1000); // every 4 hours
     setInterval(updatePercentsLeft, 1000);
     setInterval(updateTemperature, 1000 * 60 * 15);
-    setInterval(checkServersStatus, 1000 * 60 * 5);
+    setInterval(checkServersStatus, SITE_STATUSES_UPDATE_TIMEOUT);
   });
 
   function updatePercentsLeft() {
