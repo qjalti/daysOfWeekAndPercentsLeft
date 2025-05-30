@@ -58,6 +58,26 @@ app.whenReady().then(() => {
   tray.setContextMenu(CONTEXT_MENU);
 
   win.webContents.on('before-input-event', (event, input) => {
+    const step = 1;
+    const bounds = win.getBounds();
+
+    if (input.type === 'keyDown') {
+      switch (input.key) {
+        case 'ArrowLeft':
+          win.setBounds({ x: bounds.x - step, y: bounds.y });
+          break;
+        case 'ArrowRight':
+          win.setBounds({ x: bounds.x + step, y: bounds.y });
+          break;
+        case 'ArrowUp':
+          win.setBounds({ x: bounds.x, y: bounds.y - step });
+          break;
+        case 'ArrowDown':
+          win.setBounds({ x: bounds.x, y: bounds.y + step });
+          break;
+      }
+    }
+
     if (input.type === 'keyDown' && input.key === 'Escape') {
       win.close();
     }
