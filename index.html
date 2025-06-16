@@ -48,16 +48,13 @@
         font-size: 14px;
         margin: 2px;
         color: rgba(255, 255, 255, 0.625);
+        filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.875));
       }
 
       span {
         -webkit-app-region: no-drag;
         pointer-events: none;
         user-select: none;
-      }
-
-      .site {
-        filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.875));
       }
 
       .site:not(:last-child):after {
@@ -145,7 +142,6 @@
         -webkit-app-region: drag;
         padding: 0 8px;
         color: rgba(255, 255, 255, 0.625);
-        filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.875));
         cursor: default;
         user-select: none;
       }
@@ -161,6 +157,14 @@
         width: 18px;
         height: 18px;
         fill: rgba(250, 250, 250, 0.625);
+      }
+
+      #statusesBox {
+        margin-right: 8px;
+      }
+
+      #timestampDiv {
+        margin-left: 8px;
       }
     </style>
 </head>
@@ -195,7 +199,6 @@
     </div>
     <div id="temperatureValue"></div>
 </div>
-
 <div id="statusesBox">
     <span id="PCL" class="site yellow">PCL</span>
     <span id="SHD" class="site yellow">SHD</span>
@@ -204,6 +207,8 @@
     <span id="RTE" class="site yellow">RTE</span>
     <span id="OHO" class="site yellow">OHO</span>
 </div>
+::
+<div id="timestampDiv"></div>
 
 <script>
   // const LA = '55.80852';
@@ -227,6 +232,13 @@
   const TOTAL_WORK_HOURS = CURRENT_DAY === 5 ? 8 : 9;
 
   const TOTAL_SECONDS = TOTAL_WORK_HOURS * 60 * 60; // 9 часов (8 рабочих часов + 1 обеденных час)
+
+  const writeCurrentTimestamp = () => {
+    const TIMESTAMP_DIV = document.querySelector('#timestampDiv');
+    const TIMESTAMP = Math.floor(Date.now() / 1000);
+    const FORMATTED_TIMESTAMP = TIMESTAMP.toLocaleString('ru-RU');
+    TIMESTAMP_DIV.innerHTML = FORMATTED_TIMESTAMP;
+  };
 
   const checkServersStatus = async () => {
     const SITES = [
@@ -367,6 +379,7 @@
     setInterval(updatePercentsLeft, 1000);
     setInterval(updateTemperature, 1000 * 60 * 15);
     setInterval(checkServersStatus, SITE_STATUSES_UPDATE_TIMEOUT);
+    setInterval(writeCurrentTimestamp, 1000);
   });
 
   function updatePercentsLeft() {
