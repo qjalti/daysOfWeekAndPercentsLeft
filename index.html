@@ -11,7 +11,7 @@
         --offset: 8px;
         --main-width: calc(var(--base-width) - (var(--offset) * 18));
         --main-height: calc(var(--base-height) - (var(--offset) * 14));
-        --main-border-radius: 8px;
+        --main-border-radius: 4px;
 
         /**
         * Colors
@@ -122,18 +122,18 @@
         -webkit-app-region: drag;
       }
 
-      #new-DoW, #new-PF {
+      #new-DoW, #new-PF, #left-color-box, #right-color-box {
         width: calc(var(--main-width) / 2);
         height: var(--main-height);
         border-radius: var(--main-border-radius);
       }
 
-      #new-DoW {
+      #new-DoW, #left-color-box {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
       }
 
-      #new-PF {
+      #new-PF, #right-color-box {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
       }
@@ -172,9 +172,88 @@
         margin-left: 8px;
         text-transform: uppercase;
       }
+
+      #left-color-box {
+        animation: left-rainbow 21s infinite cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      #right-color-box {
+        animation: right-rainbow 21s infinite cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      @keyframes left-rainbow {
+        0% {
+          background-color: rgba(244, 67, 54, 1);
+        }
+
+        14% {
+          background-color: rgba(255, 152, 0, 1);
+        }
+
+        28% {
+          background-color: rgba(255, 235, 59, 1);
+        }
+
+        42% {
+          background-color: rgba(76, 175, 80, 1);
+        }
+
+        57% {
+          background-color: rgba(0, 188, 212, 1);
+        }
+
+        71% {
+          background-color: rgba(33, 150, 243, 1);
+        }
+
+        85% {
+          background-color: rgb(156, 39, 176, 1);
+        }
+
+        100% {
+          background-color: rgba(244, 67, 54, 1);
+        }
+      }
+
+      @keyframes right-rainbow {
+        0% {
+          background-color: rgba(54, 231, 244, 1);
+        }
+
+        14% {
+          background-color: rgba(0, 103, 255, 1);
+        }
+
+        28% {
+          background-color: rgba(59, 79, 255, 1);
+        }
+
+        42% {
+          background-color: rgba(175, 76, 171, 1);
+        }
+
+        57% {
+          background-color: rgba(212, 24, 0, 1);
+        }
+
+        71% {
+          background-color: rgba(243, 126, 33, 1);
+        }
+
+        85% {
+          background-color: rgba(59, 176, 39, 1);
+        }
+
+        100% {
+          background-color: rgba(54, 231, 244, 1);
+        }
+      }
     </style>
 </head>
 <body>
+<div id="left-color-box"></div>
+<div id="right-color-box"></div>
+&nbsp;::&nbsp;
 <div id="new-box">
     <div id="new-DoW"></div>
     <div id="new-PF"></div>

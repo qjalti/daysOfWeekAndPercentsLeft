@@ -20,7 +20,7 @@ let tray = null;
 
 app.whenReady().then(() => {
   win = new BrowserWindow({
-    width: 256 + (8 * 94),
+    width: 256 + (8 * 104),
     height: 128 - (8 * 10),
     // width: 1920,
     // height: 1080,
@@ -64,16 +64,16 @@ app.whenReady().then(() => {
     if (input.type === 'keyDown') {
       switch (input.key) {
         case 'ArrowLeft':
-          win.setBounds({ x: bounds.x - step, y: bounds.y });
+          win.setBounds({x: bounds.x - step, y: bounds.y});
           break;
         case 'ArrowRight':
-          win.setBounds({ x: bounds.x + step, y: bounds.y });
+          win.setBounds({x: bounds.x + step, y: bounds.y});
           break;
         case 'ArrowUp':
-          win.setBounds({ x: bounds.x, y: bounds.y - step });
+          win.setBounds({x: bounds.x, y: bounds.y - step});
           break;
         case 'ArrowDown':
-          win.setBounds({ x: bounds.x, y: bounds.y + step });
+          win.setBounds({x: bounds.x, y: bounds.y + step});
           break;
       }
     }
