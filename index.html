@@ -411,11 +411,15 @@
       indoorTemp = 'Ошибка';
     } else {
       const INDOOR_TEMP_JSON = await INDOOR_TEMP_RES.json();
-      indoorTemp = parseInt(INDOOR_TEMP_JSON.data[0].temperature);
+      if (INDOOR_TEMP_RES.length) {
+        indoorTemp = parseInt(INDOOR_TEMP_JSON.data[0].temperature) + '\u00B0C';
+      } else {
+        indoorTemp = '!DATA'
+      }
     }
 
     window.OUTDOOR_TEMP_VALUE.innerHTML = outdoorTemp + '\u00B0C';
-    window.INDOOR_TEMP_VALUE.innerHTML = indoorTemp + '\u00B0C';
+    window.INDOOR_TEMP_VALUE.innerHTML = indoorTemp;
   };
 
   const updateDayOfWeek = () => {
