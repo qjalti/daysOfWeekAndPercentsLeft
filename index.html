@@ -411,7 +411,7 @@
       indoorTemp = 'Ошибка';
     } else {
       const INDOOR_TEMP_JSON = await INDOOR_TEMP_RES.json();
-      if (INDOOR_TEMP_RES.length) {
+      if (INDOOR_TEMP_JSON.data.length) {
         indoorTemp = parseInt(INDOOR_TEMP_JSON.data[0].temperature) + '\u00B0C';
       } else {
         indoorTemp = '!DATA'
