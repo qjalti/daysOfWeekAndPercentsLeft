@@ -11,7 +11,7 @@
         --offset: 8px;
         --main-width: calc(var(--base-width) - (var(--offset) * 18));
         --main-height: calc(var(--base-height) - (var(--offset) * 14));
-        --main-border-radius: 4px;
+        --main-border-radius: 16px;
 
         /**
         * Colors
@@ -51,13 +51,14 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        gap: 4px;
         background-color: rgba(18, 18, 18, 0.875);
         border-radius: var(--main-border-radius);
         filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.875));
         box-shadow: rgba(0, 0, 0, 0.2) 0 3px 3px -2px, rgba(0, 0, 0, 0.14) 0 3px 4px 0,
         rgba(0, 0, 0, 0.12) 0 1px 8px 0;
         width: fit-content;
-        padding: 4px 8px;
+        padding: 4px 16px;
       }
 
       span {
@@ -149,7 +150,6 @@
 
       #temperatureBox {
         -webkit-app-region: drag;
-        padding: 0 8px;
         color: rgba(255, 255, 255, 0.625);
         cursor: default;
         user-select: none;
@@ -168,18 +168,11 @@
         fill: rgba(250, 250, 250, 0.625);
       }
 
-      #statusesBox {
-        margin-right: 8px;
-      }
-
       #timestampDiv {
-        margin-left: 8px;
-        margin-right: 8px;
         user-select: none;
       }
 
       #timeDiv {
-        margin-left: 8px;
         text-transform: uppercase;
         user-select: none;
       }
@@ -227,38 +220,6 @@
       }
 
       @keyframes right-rainbow {
-        /*0% {*/
-        /*  background-color: rgba(54, 231, 244, 1);*/
-        /*}*/
-
-        /*14% {*/
-        /*  background-color: rgba(0, 103, 255, 1);*/
-        /*}*/
-
-        /*28% {*/
-        /*  background-color: rgba(59, 79, 255, 1);*/
-        /*}*/
-
-        /*42% {*/
-        /*  background-color: rgba(175, 76, 171, 1);*/
-        /*}*/
-
-        /*57% {*/
-        /*  background-color: rgba(212, 24, 0, 1);*/
-        /*}*/
-
-        /*71% {*/
-        /*  background-color: rgba(243, 126, 33, 1);*/
-        /*}*/
-
-        /*85% {*/
-        /*  background-color: rgba(59, 176, 39, 1);*/
-        /*}*/
-
-        /*100% {*/
-        /*  background-color: rgba(54, 231, 244, 1);*/
-        /*}*/
-
         0% {
           background-color: #F43688;
         }
@@ -291,18 +252,48 @@
           background-color: #F43688;
         }
       }
+
+      button.refresh-btn {
+        border: none;
+        background-color: transparent;
+        padding: 4px 8px;
+        border-radius: 16px;
+        transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: background-color;
+        cursor: pointer;
+      }
+
+      button.refresh-btn:hover {
+        background-color: rgba(25, 22, 32, 1);
+      }
+
+      button.refresh-btn:active {
+        background-color: rgba(25, 22, 32, 0.75);
+      }
+
+      button.refresh-btn svg {
+        fill: rgba(255, 255, 255, 0.875);
+        width: 16px;
+        height: 16px;
+      }
+
+      .colors-rainbow {
+        display: flex;
+      }
     </style>
 </head>
 <body>
 <div id="mainBox">
-    <div id="left-color-box"></div>
-    <div id="right-color-box"></div>
-    &nbsp;::&nbsp;
+    <div class="colors-rainbow">
+        <div id="left-color-box"></div>
+        <div id="right-color-box"></div>
+    </div>
+    ::
     <div id="new-box">
         <div id="new-DoW"></div>
         <div id="new-PF"></div>
     </div>
-    &nbsp;::
+    ::
     <div id="temperatureBox">
         <div class="temp">
             <svg
@@ -336,6 +327,14 @@
         <span id="RTE" class="site yellow">RTE</span>
         <span id="OHO" class="site yellow">OHO</span>
     </div>
+    ::
+    <button class="refresh-btn" id="refreshBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+            <path
+                    d="M480-160q-134 0-227-93t-93-227q0-134 93-227t227-93q69 0 132 28.5T720-690v-110h80v280H520v-80h168q-32-56-87.5-88T480-720q-100 0-170 70t-70 170q0 100 70 170t170 70q77 0 139-44t87-116h84q-28 106-114 173t-196 67Z"
+            />
+        </svg>
+    </button>
     ::
     <div id="timestampDiv"></div>
     ::
@@ -455,7 +454,13 @@
     if (!INDOOR_TEMP_RES.ok) {
       indoorTemp = 'Ошибка';
     } else {
+      /**
+       * Объект с данными по температуре снаружи
+       * @const
+       * @type {Object} Объект с данными по температуре снаружи
+       */
       const INDOOR_TEMP_JSON = await INDOOR_TEMP_RES.json();
+
       if (INDOOR_TEMP_JSON.data.length) {
         indoorTemp = parseInt(INDOOR_TEMP_JSON.data[0].temperature) + '\u00B0C';
       } else {
@@ -519,6 +524,10 @@
     window.NEW_BOX_DIV = document.getElementById('new-box');
     window.NEW_DOW_DIV = document.getElementById('new-DoW');
     window.NEW_PF_DIV = document.getElementById('new-PF');
+
+    window.REFRESH_BTN = document.querySelector('#refreshBtn');
+
+    window.REFRESH_BTN.addEventListener('click', checkServersStatus);
 
     updateDayOfWeek();
     updatePercentsLeft();
