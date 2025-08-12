@@ -26,7 +26,7 @@ app.whenReady().then(() => {
     // height: 1080,
     frame: false,
     alwaysOnTop: true,
-    // transparent: true,
+    transparent: true,
     resizable: false,
     hasShadow: false,
     movable: true,
