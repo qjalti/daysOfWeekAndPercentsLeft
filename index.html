@@ -173,7 +173,20 @@
       }
 
       #timeDiv {
+        user-select: none;
+      }
+
+      #dayOfWeekDiv {
         text-transform: uppercase;
+        user-select: none;
+      }
+
+      #dayOfWeekDiv::after, #dateDiv::after {
+        content: ',';
+        color: rgba(255, 255, 255, 0.875);
+      }
+
+      #dateDiv {
         user-select: none;
       }
 
@@ -338,6 +351,8 @@
     ::
     <div id="timestampDiv"></div>
     ::
+    <div id="dayOfWeekDiv"></div>
+    <div id="dateDiv"></div>
     <div id="timeDiv"></div>
 </div>
 
@@ -371,16 +386,19 @@
   };
 
   const writeCurrentTime = () => {
-    const TIMESTAMP_DIV = document.querySelector('#timeDiv');
     const TIMESTAMP = new Date();
-    TIMESTAMP_DIV.innerHTML = TIMESTAMP.toLocaleString('ru-RU', {
+    window.DAY_OF_WEEK_DIV.innerHTML = TIMESTAMP.toLocaleString('ru-RU', {
+      weekday: 'short',
+    });
+    window.TIME_DIV.innerHTML = TIMESTAMP.toLocaleString('ru-RU', {
       hour: 'numeric',
       minute: 'numeric',
       second: 'numeric',
+    });
+    window.DATE_DIV.innerHTML = TIMESTAMP.toLocaleString('ru-RU', {
       year: 'numeric',
       month: 'numeric',
       day: 'numeric',
-      weekday: 'short',
     });
   };
 
@@ -513,6 +531,7 @@
 
     window.NEW_DOW_DIV.setAttribute('class', '');
     window.NEW_DOW_DIV.classList.add(bgColorClass);
+    window.DAY_OF_WEEK_DIV.classList.add(colorClass);
   };
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -528,6 +547,10 @@
     window.REFRESH_BTN = document.querySelector('#refreshBtn');
 
     window.REFRESH_BTN.addEventListener('click', checkServersStatus);
+
+    window.DAY_OF_WEEK_DIV = document.querySelector('#dayOfWeekDiv');
+    window.TIME_DIV = document.querySelector('#timeDiv');
+    window.DATE_DIV = document.querySelector('#dateDiv');
 
     updateDayOfWeek();
     updatePercentsLeft();
@@ -565,25 +588,31 @@
     }
 
     let bgColorClassLF = 'purple-light';
+    let colorClassLF = '';
 
     if (percentsLeft >= 0 && percentsLeft < 20) {
       bgColorClassLF = 'red-light';
+      colorClassLF = 'red';
     }
 
     if (percentsLeft >= 20 && percentsLeft < 40) {
       bgColorClassLF = 'deep-orange-light';
+      colorClassLF = 'deep-orange';
     }
 
     if (percentsLeft >= 40 && percentsLeft < 60) {
       bgColorClassLF = 'orange-light';
+      colorClassLF = 'orange';
     }
 
     if (percentsLeft >= 60 && percentsLeft < 90) {
       bgColorClassLF = 'yellow-light';
+      colorClassLF = 'yellow';
     }
 
     if (percentsLeft >= 85 && percentsLeft <= 100) {
       bgColorClassLF = 'green-light';
+      colorClassLF = 'green';
       if (!window.AUDIO_PLAYED) {
         window.electronAPI.playSound();
         window.AUDIO_PLAYED = true;
@@ -596,6 +625,7 @@
 
     window.NEW_PF_DIV.setAttribute('class', '');
     window.NEW_PF_DIV.classList.add(bgColorClassLF);
+    window.TIME_DIV.classList.add(colorClassLF);
   }
 </script>
 </body>
