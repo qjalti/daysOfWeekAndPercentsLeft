@@ -579,13 +579,7 @@
     let percentsLeft = 100 - (100 * DIFF_MS_TO_SEC / TOTAL_SECONDS);
 
     if (percentsLeft > 0) {
-      percentsLeft = percentsLeft.toFixed(2);
-    }
-    if (percentsLeft < 0) {
-      percentsLeft = '!START';
-    }
-    if (percentsLeft > 100) {
-      percentsLeft = 'END';
+      percentsLeft = Number(percentsLeft.toFixed(0));
     }
 
     let bgColorClassLF = 'purple-light';
@@ -614,13 +608,16 @@
     if (percentsLeft >= 85 && percentsLeft <= 100) {
       bgColorClassLF = 'green-light';
       colorClassLF = 'green';
+    }
+
+    if (percentsLeft === 87) {
       if (!window.AUDIO_PLAYED) {
         window.electronAPI.playSound();
         window.AUDIO_PLAYED = true;
       }
     }
 
-    if (percentsLeft === 91) {
+    if (percentsLeft === 1) {
       window.AUDIO_PLAYED = false;
     }
 
