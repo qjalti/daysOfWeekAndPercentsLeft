@@ -4,16 +4,41 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "electron-packager . DayOfWeekApp --platform=win32 --arch=x64 --overwrite --icon=assets/icon.ico && explorer DayOfWeekApp-win32-x64"
+    "build": "electron-packager . DayOfWeekApp --platform=win32 --arch=x64 --overwrite --icon=assets/icon.ico && explorer DayOfWeekApp-win32-x64",
+    "e-builder": "electron-builder --win --config.compression=maximum"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "electron": "^34.0.1"
+    "electron": "^34.0.1",
+    "electron-builder": "^26.0.12"
   },
   "dependencies": {
     "node-wav-player": "^1.0.0"
+  },
+  "build": {
+    "appId": "com.dayofweek.app",
+    "productName": "DayOfWeekApp",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "compression": "maximum",
+    "asar": true,
+    "files": [
+      "main.js",
+      "index.html",
+      "assets/**/*",
+      "node_modules/**/*",
+      "!node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme,test,__tests__,tests,powered-test,example,examples}",
+      "!node_modules/.bin",
+      "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}",
+      "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS}"
+    ]
   }
 }
