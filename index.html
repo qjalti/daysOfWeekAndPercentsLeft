@@ -132,7 +132,8 @@
       }
 
       #new-box {
-        display: flex;
+        /*display: flex;*/
+        display: none;
         -webkit-app-region: drag;
       }
 
@@ -310,7 +311,6 @@
         <div id="new-DoW"></div>
         <div id="new-PF"></div>
     </div>
-    ::
     <div id="temperatureBox">
         <div class="temp">
             <svg
@@ -492,6 +492,56 @@
 
     window.OUTDOOR_TEMP_VALUE.innerHTML = outdoorTemp + '\u00B0C';
     window.INDOOR_TEMP_VALUE.innerHTML = indoorTemp;
+
+    /**
+     * Temperature text color
+     */
+    let outdoorTempColor;
+
+    if (outdoorTemp >= 25) {
+      outdoorTempColor = 'rgba(183, 28, 28, 0.875)';
+    }
+
+    if (outdoorTemp <= 24) {
+      outdoorTempColor = 'rgba(255, 152, 0, 0.875)';
+    }
+
+    if (outdoorTemp <= 23) {
+      outdoorTempColor = 'rgba(255, 193, 7, 0.875)';
+    }
+
+    if (outdoorTemp <= 22) {
+      outdoorTempColor = 'rgba(255, 235, 59, 0.875)';
+    }
+
+    if (outdoorTemp <= 21) {
+      outdoorTempColor = 'rgba(139, 195, 74, 0.875)';
+    }
+
+    if (outdoorTemp <= 20) {
+      outdoorTempColor = 'rgba(76, 175, 80, 0.875)';
+    }
+
+    if (outdoorTemp <= 19) {
+      outdoorTempColor = 'rgba(33, 150, 243, 0.875)';
+    }
+
+    if (outdoorTemp <= 19) {
+      outdoorTempColor = 'rgba(33, 150, 243, 0.875)';
+    }
+    if (outdoorTemp <= 9) {
+      outdoorTempColor = 'rgba(30, 136, 229, 0.875)';
+    }
+    if (outdoorTemp <= 0) {
+      outdoorTempColor = 'rgba(25, 118, 210, 0.875)';
+    }
+    if (outdoorTemp <= -10) {
+      outdoorTempColor = 'rgba(21, 101, 192, 0.875)';
+    }
+    if (outdoorTemp <= -20) {
+      outdoorTempColor = 'rgba(13, 71, 161, 0.875)';
+    }
+    window.OUTDOOR_TEMP_VALUE.style.color = outdoorTempColor;
   };
 
   const updateDayOfWeek = () => {
