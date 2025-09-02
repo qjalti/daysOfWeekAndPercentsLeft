@@ -60,6 +60,9 @@
         rgba(0, 0, 0, 0.12) 0 1px 8px 0;
         width: fit-content;
         padding: 0 16px;
+        opacity: 0;
+        transform: scale(0.75, 0.5625);
+        transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
       }
 
       span {
@@ -298,6 +301,11 @@
 
       .colors-rainbow {
         display: flex;
+      }
+
+      .grow-in {
+        opacity: 1 !important;
+        transform: none !important;
       }
     </style>
 </head>
@@ -612,16 +620,23 @@
     window.TIME_DIV = document.querySelector('#timeDiv');
     window.DATE_DIV = document.querySelector('#dateDiv');
 
+    window.MAIN_BOX = document.querySelector('#mainBox');
+
     updateDayOfWeek();
     updatePercentsLeft();
     updateTemperature();
     checkServersStatus();
+    writeCurrentTimestamp();
+    writeCurrentTime();
     setInterval(updateDayOfWeek, 4 * 60 * 60 * 1000); // every 4 hours
     setInterval(updatePercentsLeft, 1000);
     setInterval(updateTemperature, 1000 * 60 * 15);
     setInterval(checkServersStatus, SITE_STATUSES_UPDATE_TIMEOUT);
     setInterval(writeCurrentTimestamp, 1000);
     setInterval(writeCurrentTime, 1000);
+    setTimeout(() => {
+      window.MAIN_BOX.classList.add('grow-in');
+    }, 250);
   });
 
   function updatePercentsLeft() {

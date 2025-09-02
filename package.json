@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "electron-packager . DayOfWeekApp --platform=win32 --arch=x64 --overwrite --icon=assets/icon.ico && explorer DayOfWeekApp-win32-x64",
-    "e-builder": "electron-builder --win --config.compression=maximum"
+    "e-build": "electron-builder --win --config.compression=maximum && explorer dist"
   },
   "keywords": [],
   "author": "",

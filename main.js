@@ -95,13 +95,13 @@ const playSound = () => {
   const soundPath = PATH.join(__dirname, 'assets/todo.wav');
 
   if (process.platform === 'win32') {
-    player.play({path: soundPath}).catch(err => console.error('Ошибка воспроизведения:', err));
+    player.play({path: soundPath}).catch(err => alert('ErrorCode 455. ' + err));
   } else if (process.platform === 'darwin') {
     exec(`afplay "${soundPath}"`);
   } else {
     exec(`aplay "${soundPath}"`);
   }
-  showNotification();
+  // showNotification();
 }
 
 const showNotification = () => {
