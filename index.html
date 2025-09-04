@@ -614,7 +614,17 @@
 
     window.OT_SVG = document.querySelector('.outdoor-temperature-svg');
 
-    window.REFRESH_BTN.addEventListener('click', checkServersStatus);
+    window.REFRESH_BTN.addEventListener('click', () => {
+        checkServersStatus();
+        updateDayOfWeek();
+        updateTemperature();
+        updatePercentsLeft();
+        window.MAIN_BOX.classList.remove('grow-in');
+        setTimeout(() => {
+          window.MAIN_BOX.classList.add('grow-in');
+        }, 250);
+      }
+    );
 
     window.DAY_OF_WEEK_DIV = document.querySelector('#dayOfWeekDiv');
     window.TIME_DIV = document.querySelector('#timeDiv');
