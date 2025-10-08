@@ -1,6 +1,6 @@
-const {contextBridge, ipcRenderer} = require('electron');
+const { contextBridge, ipcRenderer } = require("electron");
 
-contextBridge.exposeInMainWorld('electronAPI', {
-  playSound: () => ipcRenderer.send('play-sound'),
-  closeWindow: () => ipcRenderer.send('close-window')
+contextBridge.exposeInMainWorld("electronAPI", {
+  playSound: () => ipcRenderer.send("play-sound"),
+  closeWindow: () => ipcRenderer.send("close-window"),
 });
