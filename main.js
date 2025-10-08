@@ -5,23 +5,22 @@ const {
   Menu,
   nativeImage,
   ipcMain,
-  Notification
-} = require('electron');
+} = require("electron");
 
-const PATH = require('path');
-const {exec} = require('child_process');
-const player = require('node-wav-player');
+const PATH = require("path");
+const { exec } = require("child_process");
+const player = require("node-wav-player");
 
-const PATH_TO_ICON = './assets/icon.ico';
-const PATH_TO_TRAY_ICON = './assets/tray_icon.ico';
+const PATH_TO_ICON = "./assets/icon.ico";
+const PATH_TO_TRAY_ICON = "./assets/tray_icon.ico";
 
 let win;
 let tray = null;
 
 app.whenReady().then(() => {
   win = new BrowserWindow({
-    width: 256 + (8 * 84),
-    height: 128 - (8 * 10),
+    width: 942,
+    height: 28,
     // width: 1920,
     // height: 1080,
     frame: false,
@@ -32,12 +31,12 @@ app.whenReady().then(() => {
     movable: true,
     focusable: true,
     icon: nativeImage.createFromPath(PATH_TO_ICON),
-    backgroundMaterial: 'acrylic',
+    backgroundMaterial: "acrylic",
     minimizable: false,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: true,
-      preload: PATH.join(__dirname, 'preload.js'),
+      preload: PATH.join(__dirname, "preload.js"),
     },
   });
   // win.webContents.openDevTools();
@@ -46,68 +45,60 @@ app.whenReady().then(() => {
 
   const CONTEXT_MENU = Menu.buildFromTemplate([
     {
-      label: 'Exit',
-      type: 'normal',
+      label: "Exit",
+      type: "normal",
       click: () => {
         app.quit();
       },
     },
   ]);
 
-  tray.setToolTip('daysOfWeekAndPercentsLeft');
+  tray.setToolTip("daysOfWeekAndPercentsLeft");
   tray.setContextMenu(CONTEXT_MENU);
 
-  win.webContents.on('before-input-event', (event, input) => {
+  win.webContents.on("before-input-event", (event, input) => {
     const step = 1;
     const bounds = win.getBounds();
 
-    if (input.type === 'keyDown') {
+    if (input.type === "keyDown") {
       switch (input.key) {
-        case 'ArrowLeft':
-          win.setBounds({x: bounds.x - step, y: bounds.y});
+        case "ArrowLeft":
+          win.setBounds({ x: bounds.x - step, y: bounds.y });
           break;
-        case 'ArrowRight':
-          win.setBounds({x: bounds.x + step, y: bounds.y});
+        case "ArrowRight":
+          win.setBounds({ x: bounds.x + step, y: bounds.y });
           break;
-        case 'ArrowUp':
-          win.setBounds({x: bounds.x, y: bounds.y - step});
+        case "ArrowUp":
+          win.setBounds({ x: bounds.x, y: bounds.y - step });
           break;
-        case 'ArrowDown':
-          win.setBounds({x: bounds.x, y: bounds.y + step});
+        case "ArrowDown":
+          win.setBounds({ x: bounds.x, y: bounds.y + step });
           break;
       }
     }
 
-    if (input.type === 'keyDown' && input.key === 'Escape') {
+    if (input.type === "keyDown" && input.key === "Escape") {
       win.close();
     }
   });
 
-  win.loadFile('index.html').then(() => false);
+  win.loadFile("index.html").then(() => false);
 });
 
-
-ipcMain.on('play-sound', () => {
+ipcMain.on("play-sound", () => {
   playSound();
 });
 
 const playSound = () => {
-  const soundPath = PATH.join(__dirname, 'assets/todo.wav');
+  const soundPath = PATH.join(__dirname, "assets/todo.wav");
 
-  if (process.platform === 'win32') {
-    player.play({path: soundPath}).catch(err => alert('ErrorCode 455. ' + err));
-  } else if (process.platform === 'darwin') {
+  if (process.platform === "win32") {
+    player
+      .play({ path: soundPath })
+      .catch((err) => alert("ErrorCode 455. " + err));
+  } else if (process.platform === "darwin") {
     exec(`afplay "${soundPath}"`);
   } else {
     exec(`aplay "${soundPath}"`);
   }
-  // showNotification();
-}
-
-const showNotification = () => {
-  const notif = new Notification({
-    title: '████████',
-    body: '██ █████ ████████ ███ < 1H'
-  });
-  notif.show();
-}
+};

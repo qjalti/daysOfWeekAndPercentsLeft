@@ -1,16 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Day of Week</title>
     <style>
       :root {
-        --base-width: 192px;
-        --base-height: 128px;
         --offset: 8px;
-        --main-width: calc(var(--base-width) - (var(--offset) * 18));
-        --main-height: calc(var(--base-height) - (var(--offset) * 14));
         --main-border-radius: 16px;
 
         /**
@@ -41,11 +37,13 @@
       }
 
       body {
-        /*font-family: "JetBrains Mono", monospace;*/
-        font-family: "Cascadia Code", sans-serif;
+        font-family: "JetBrains Mono", monospace;
+        /*font-family: "Cascadia Code", sans-serif;*/
         font-size: 12px;
         margin: 0;
         color: rgba(255, 255, 255, 0.625);
+        width: 942px;
+        height: 28px !important;
       }
 
       #mainBox {
@@ -56,8 +54,10 @@
         background-color: rgba(18, 18, 18, 0.875);
         border-radius: var(--main-border-radius);
         filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.875));
-        box-shadow: rgba(0, 0, 0, 0.2) 0 3px 3px -2px, rgba(0, 0, 0, 0.14) 0 3px 4px 0,
-        rgba(0, 0, 0, 0.12) 0 1px 8px 0;
+        box-shadow:
+          rgba(0, 0, 0, 0.2) 0 3px 3px -2px,
+          rgba(0, 0, 0, 0.14) 0 3px 4px 0,
+          rgba(0, 0, 0, 0.12) 0 1px 8px 0;
         width: fit-content;
         padding: 0 16px;
         opacity: 0;
@@ -108,31 +108,52 @@
       * Light colors
        */
       .red-light {
-        background-color: rgba(var(--red), var(--light-colors-opacity)) !important;
+        background-color: rgba(
+          var(--red),
+          var(--light-colors-opacity)
+        ) !important;
       }
 
       .deep-orange-light {
-        background-color: rgba(var(--deep-orange), var(--light-colors-opacity)) !important;
+        background-color: rgba(
+          var(--deep-orange),
+          var(--light-colors-opacity)
+        ) !important;
       }
 
       .orange-light {
-        background-color: rgba(var(--orange), var(--light-colors-opacity)) !important;
+        background-color: rgba(
+          var(--orange),
+          var(--light-colors-opacity)
+        ) !important;
       }
 
       .yellow-light {
-        background-color: rgba(var(--yellow), var(--light-colors-opacity)) !important;
+        background-color: rgba(
+          var(--yellow),
+          var(--light-colors-opacity)
+        ) !important;
       }
 
       .green-light {
-        background-color: rgba(var(--green), var(--light-colors-opacity)) !important;
+        background-color: rgba(
+          var(--green),
+          var(--light-colors-opacity)
+        ) !important;
       }
 
       .blue-light {
-        background-color: rgba(var(--blue), var(--light-colors-opacity)) !important;
+        background-color: rgba(
+          var(--blue),
+          var(--light-colors-opacity)
+        ) !important;
       }
 
       .purple-light {
-        background-color: rgba(var(--purple), var(--light-colors-opacity)) !important;
+        background-color: rgba(
+          var(--purple),
+          var(--light-colors-opacity)
+        ) !important;
       }
 
       #new-box {
@@ -141,18 +162,23 @@
         -webkit-app-region: drag;
       }
 
-      #new-DoW, #new-PF, #left-color-box, #right-color-box {
-        width: calc(var(--main-width) / 2);
-        height: calc(var(--main-height) / 1.5);
+      #new-DoW,
+      #new-PF,
+      #left-color-box,
+      #right-color-box {
+        width: 24px;
+        height: 12px;
         border-radius: var(--main-border-radius);
       }
 
-      #new-DoW, #left-color-box {
+      #new-DoW,
+      #left-color-box {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
       }
 
-      #new-PF, #right-color-box {
+      #new-PF,
+      #right-color-box {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
       }
@@ -190,8 +216,9 @@
         user-select: none;
       }
 
-      #dayOfWeekDiv::after, #dateDiv::after {
-        content: ',';
+      #dayOfWeekDiv::after,
+      #dateDiv::after {
+        content: ",";
         color: rgba(255, 255, 255, 0.875);
       }
 
@@ -243,35 +270,35 @@
 
       @keyframes right-rainbow {
         0% {
-          background-color: #F43688;
+          background-color: #f43688;
         }
 
         14% {
-          background-color: #FF1800;
+          background-color: #ff1800;
         }
 
         28% {
-          background-color: #FF893B;
+          background-color: #ff893b;
         }
 
         42% {
-          background-color: #79AF4C;
+          background-color: #79af4c;
         }
 
         57% {
-          background-color: #00D482;
+          background-color: #00d482;
         }
 
         71% {
-          background-color: #21F3E7;
+          background-color: #21f3e7;
         }
 
         85% {
-          background-color: #5727B0;
+          background-color: #5727b0;
         }
 
         100% {
-          background-color: #F43688;
+          background-color: #f43688;
         }
       }
 
@@ -323,418 +350,413 @@
         }
       }
     </style>
-</head>
-<body>
-<div id="mainBox">
-    <div class="colors-rainbow">
+  </head>
+  <body>
+    <div id="mainBox">
+      <div class="colors-rainbow">
         <div id="left-color-box"></div>
         <div id="right-color-box"></div>
-    </div>
-    ::
-    <div id="new-box">
+      </div>
+      ::
+      <div id="new-box">
         <div id="new-DoW"></div>
         <div id="new-PF"></div>
-    </div>
-    <div id="temperatureBox">
+      </div>
+      <div id="temperatureBox">
         <div class="temp">
-            <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 -960 960 960"
-            >
-                <path
-                        d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"
-                />
-            </svg>
-            <span id="indoorTemp"></span>
-            ::
-            <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 -960 960 960"
-                    class="outdoor-temperature-svg"
-            >
-                <path
-                        d="M200-80v-80h240v-160h-80q-83 0-141.5-58.5T160-520q0-60 33-110.5t89-73.5q9-75 65.5-125.5T480-880q76 0 132.5 50.5T678-704q56 23 89 73.5T800-520q0 83-58.5 141.5T600-320h-80v160h240v80H200Zm160-320h240q50 0 85-35t35-85q0-36-20.5-66T646-630l-42-18-6-46q-6-45-39.5-75.5T480-800q-45 0-78.5 30.5T362-694l-6 46-42 18q-33 14-53.5 44T240-520q0 50 35 85t85 35Zm120-200Z"
-                />
-            </svg>
-            <span id="outdoorTemp"></span>
-            ::
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+            <path
+              d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"
+            />
+          </svg>
+          <span id="indoorTemp"></span>
+          ::
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 -960 960 960"
+            class="outdoor-temperature-svg"
+          >
+            <path
+              d="M200-80v-80h240v-160h-80q-83 0-141.5-58.5T160-520q0-60 33-110.5t89-73.5q9-75 65.5-125.5T480-880q76 0 132.5 50.5T678-704q56 23 89 73.5T800-520q0 83-58.5 141.5T600-320h-80v160h240v80H200Zm160-320h240q50 0 85-35t35-85q0-36-20.5-66T646-630l-42-18-6-46q-6-45-39.5-75.5T480-800q-45 0-78.5 30.5T362-694l-6 46-42 18q-33 14-53.5 44T240-520q0 50 35 85t85 35Zm120-200Z"
+            />
+          </svg>
+          <span id="outdoorTemp"></span>
+          ::
         </div>
         <div id="temperatureValue"></div>
-    </div>
-    <div id="statusesBox">
+      </div>
+      <div id="statusesBox">
         <span id="PCL" class="site yellow">PCL</span>
         <span id="SHD" class="site yellow">SHD</span>
         <span id="RTR" class="site yellow">RTR</span>
         <span id="SNB" class="site yellow">SNB</span>
         <span id="RTE" class="site yellow">RTE</span>
         <span id="OHO" class="site yellow">OHO</span>
-    </div>
-    ::
-    <button class="refresh-btn" id="refreshBtn">
+      </div>
+      ::
+      <button class="refresh-btn" id="refreshBtn">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
-            <path
-                    d="M480-160q-134 0-227-93t-93-227q0-134 93-227t227-93q69 0 132 28.5T720-690v-110h80v280H520v-80h168q-32-56-87.5-88T480-720q-100 0-170 70t-70 170q0 100 70 170t170 70q77 0 139-44t87-116h84q-28 106-114 173t-196 67Z"
-            />
+          <path
+            d="M480-160q-134 0-227-93t-93-227q0-134 93-227t227-93q69 0 132 28.5T720-690v-110h80v280H520v-80h168q-32-56-87.5-88T480-720q-100 0-170 70t-70 170q0 100 70 170t170 70q77 0 139-44t87-116h84q-28 106-114 173t-196 67Z"
+          />
         </svg>
-    </button>
-    ::
-    <div id="timestampDiv"></div>
-    ::
-    <div id="dayOfWeekDiv"></div>
-    <div id="dateDiv"></div>
-    <div id="timeDiv"></div>
-    ::
-    <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 -960 960 960"
-            class="settings-icon"
-    >
+      </button>
+      ::
+      <div id="timestampDiv"></div>
+      ::
+      <div id="dayOfWeekDiv"></div>
+      <div id="dateDiv"></div>
+      <div id="timeDiv"></div>
+      ::
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 -960 960 960"
+        class="settings-icon"
+      >
         <path
-                d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z"
+          d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z"
         />
-    </svg>
-</div>
+      </svg>
+    </div>
 
-<script>
-  // const LA = '55.80852';
-  // const LO = '37.70758';
+    <script>
+      // const LA = '55.80852';
+      // const LO = '37.70758';
 
-  const LA = '55.81160';
-  const LO = '37.79113';
+      const LA = "55.81160";
+      const LO = "37.79113";
 
-  const SITE_STATUSES_UPDATE_TIMEOUT = 1000 * 60 * 5;
+      const SITE_STATUSES_UPDATE_TIMEOUT = 1000 * 60 * 5;
 
-  window.AUDIO = new Audio('assets/todo.wav');
-  window.AUDIO_PLAYED = false;
-
-  const DAYS = [
-    'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'
-  ];
-
-  const NOW = new Date();
-  const CURRENT_DAY = NOW.getDay();
-
-  const TOTAL_WORK_HOURS = CURRENT_DAY === 5 ? 8 : 9;
-
-  const TOTAL_SECONDS = TOTAL_WORK_HOURS * 60 * 60; // 9 часов (8 рабочих часов + 1 обеденных час)
-
-  const writeCurrentTimestamp = () => {
-    const TIMESTAMP_DIV = document.querySelector('#timestampDiv');
-    const TIMESTAMP = Math.floor(Date.now() / 1000);
-    TIMESTAMP_DIV.innerHTML = TIMESTAMP.toLocaleString('ru-RU');
-  };
-
-  const writeCurrentTime = () => {
-    const TIMESTAMP = new Date();
-    window.DAY_OF_WEEK_DIV.innerHTML = TIMESTAMP.toLocaleString('ru-RU', {
-      weekday: 'short',
-    });
-    window.TIME_DIV.innerHTML = TIMESTAMP.toLocaleString('ru-RU', {
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-    });
-    window.DATE_DIV.innerHTML = TIMESTAMP.toLocaleString('ru-RU', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-    });
-  };
-
-  const checkServersStatus = async () => {
-    const SITES = [
-      {
-        name: 'PCL',
-        url: 'https://patriot-cl.ru/',
-      },
-      {
-        name: 'SHD',
-        url: 'https://shvey-dom.ru/',
-      },
-      {
-        name: 'RTR',
-        url: 'https://rodiyartech.ru/',
-      },
-      {
-        name: 'SNB',
-        url: 'https://snb.group/',
-      },
-      {
-        name: 'RTE',
-        url: 'https://rodiyar.tech/',
-      },
-      {
-        name: 'OHO',
-        url: 'https://ohrana-objective.ru/',
-      },
-    ];
-
-    SITES.map(async (el) => {
-      const CURRENT_SITE = document.querySelector(`#${el.name}`);
-      if (CURRENT_SITE.classList.contains('green')) {
-        CURRENT_SITE.classList.remove('green');
-      }
-      if (CURRENT_SITE.classList.contains('red')) {
-        CURRENT_SITE.classList.remove('red');
-      }
-      CURRENT_SITE.classList.add('yellow');
-      const STATUS = await fetch(el.url, {method: 'HEAD'});
-      CURRENT_SITE.classList.remove('yellow');
-      CURRENT_SITE.classList.add(STATUS.ok ? 'green' : 'red');
-    });
-  };
-
-  const updateTemperature = async () => {
-    const OUTDOOR_TEMP_RES = await fetch(
-      `https://api.weatherapi.com/v1/current.json?key=02a4a0e085aa4d95a1d90957251905&q=${LA},${LO}`,
-      {
-        method: 'POST'
-      },
-    );
-
-    let outdoorTemp;
-    if (!OUTDOOR_TEMP_RES.ok) {
-      outdoorTemp = 'Ошибка';
-    } else {
-      const OUTDOOR_TEMP_JSON = await OUTDOOR_TEMP_RES.json();
-      outdoorTemp = OUTDOOR_TEMP_JSON.current.temp_c.toFixed(0);
-    }
-
-    const INDOOR_TEMP_RES = await fetch(
-      'https://qjalti.ru/api/arduino/select',
-      {
-        method: 'POST'
-      }
-    );
-
-    let indoorTemp;
-    if (!INDOOR_TEMP_RES.ok) {
-      indoorTemp = 'Ошибка';
-    } else {
-      /**
-       * Объект с данными по температуре снаружи
-       * @const
-       * @type {Object} Объект с данными по температуре снаружи
-       */
-      const INDOOR_TEMP_JSON = await INDOOR_TEMP_RES.json();
-
-      if (INDOOR_TEMP_JSON.data.length) {
-        indoorTemp = parseInt(INDOOR_TEMP_JSON.data[0].temperature) + '\u00B0C';
-      } else {
-        indoorTemp = '!DATA'
-      }
-    }
-
-    window.OUTDOOR_TEMP_VALUE.innerHTML = outdoorTemp + '\u00B0C';
-    window.INDOOR_TEMP_VALUE.innerHTML = indoorTemp;
-
-    /**
-     * Temperature text color
-     */
-    let outdoorTempColor;
-
-    if (outdoorTemp >= 25) {
-      outdoorTempColor = 'rgba(183, 28, 28, 0.875)';
-    }
-
-    if (outdoorTemp <= 24) {
-      outdoorTempColor = 'rgba(255, 152, 0, 0.875)';
-    }
-
-    if (outdoorTemp <= 23) {
-      outdoorTempColor = 'rgba(255, 193, 7, 0.875)';
-    }
-
-    if (outdoorTemp <= 22) {
-      outdoorTempColor = 'rgba(255, 235, 59, 0.875)';
-    }
-
-    if (outdoorTemp <= 21) {
-      outdoorTempColor = 'rgba(139, 195, 74, 0.875)';
-    }
-
-    if (outdoorTemp <= 20) {
-      outdoorTempColor = 'rgba(76, 175, 80, 0.875)';
-    }
-
-    if (outdoorTemp <= 19) {
-      outdoorTempColor = 'rgba(0, 150, 136, 0.875)';
-    }
-
-    if (outdoorTemp <= 19) {
-      outdoorTempColor = 'rgba(0, 188, 212, 0.875)';
-    }
-    if (outdoorTemp <= 9) {
-      outdoorTempColor = 'rgba(3, 169, 244, 0.875)';
-    }
-    if (outdoorTemp <= 0) {
-      outdoorTempColor = 'rgba(25, 118, 210, 0.875)';
-    }
-    if (outdoorTemp <= -10) {
-      outdoorTempColor = 'rgba(21, 101, 192, 0.875)';
-    }
-    if (outdoorTemp <= -20) {
-      outdoorTempColor = 'rgba(13, 71, 161, 0.875)';
-    }
-    window.OUTDOOR_TEMP_VALUE.style.color = outdoorTempColor;
-    window.OT_SVG.style.fill = outdoorTempColor;
-  };
-
-  const updateDayOfWeek = () => {
-    const NOW = new Date();
-
-    const DAY_OF_WEEK = DAYS[NOW.getDay()];
-
-    let colorClass;
-    let bgColorClass;
-
-    switch (NOW.getDay()) {
-      case 0:
-        colorClass = 'green';
-        bgColorClass = 'green-light';
-        break;
-      case 6:
-        colorClass = 'green';
-        bgColorClass = 'green-light';
-        break;
-      case 1:
-        colorClass = 'red';
-        bgColorClass = 'red-light';
-        break;
-      case 2:
-        colorClass = 'deepOrange';
-        bgColorClass = 'deep-orange-light';
-        break;
-      case 3:
-        colorClass = 'orange';
-        bgColorClass = 'orange-light';
-        break;
-      case 4:
-        colorClass = 'yellow';
-        bgColorClass = 'yellow-light';
-        break;
-      case 5:
-        colorClass = 'green';
-        bgColorClass = 'green-light';
-        break;
-    }
-
-    window.NEW_DOW_DIV.setAttribute('class', '');
-    window.NEW_DOW_DIV.classList.add(bgColorClass);
-    window.DAY_OF_WEEK_DIV.setAttribute('class', '');
-    window.DAY_OF_WEEK_DIV.classList.add(colorClass);
-  };
-
-  document.addEventListener('DOMContentLoaded', () => {
-    window.INDOOR_TEMP_VALUE = document.getElementById('indoorTemp');
-    window.OUTDOOR_TEMP_VALUE = document.getElementById('outdoorTemp');
-
-    window.STATUSES_BOX = document.getElementById('statusesBox');
-
-    window.NEW_BOX_DIV = document.getElementById('new-box');
-    window.NEW_DOW_DIV = document.getElementById('new-DoW');
-    window.NEW_PF_DIV = document.getElementById('new-PF');
-
-    window.REFRESH_BTN = document.querySelector('#refreshBtn');
-
-    window.OT_SVG = document.querySelector('.outdoor-temperature-svg');
-
-    window.REFRESH_BTN.addEventListener('click', () => {
-        checkServersStatus();
-        updateDayOfWeek();
-        updateTemperature();
-        updatePercentsLeft();
-        window.MAIN_BOX.classList.remove('grow-in');
-        setTimeout(() => {
-          window.MAIN_BOX.classList.add('grow-in');
-        }, 1000);
-      }
-    );
-
-    window.DAY_OF_WEEK_DIV = document.querySelector('#dayOfWeekDiv');
-    window.TIME_DIV = document.querySelector('#timeDiv');
-    window.DATE_DIV = document.querySelector('#dateDiv');
-
-    window.MAIN_BOX = document.querySelector('#mainBox');
-
-    updateDayOfWeek();
-    updatePercentsLeft();
-    updateTemperature();
-    checkServersStatus();
-    writeCurrentTimestamp();
-    writeCurrentTime();
-    setInterval(updateDayOfWeek, 4 * 60 * 60 * 1000); // every 4 hours
-    setInterval(updatePercentsLeft, 1000);
-    setInterval(updateTemperature, 1000 * 60 * 15);
-    setInterval(checkServersStatus, SITE_STATUSES_UPDATE_TIMEOUT);
-    setInterval(writeCurrentTimestamp, 1000);
-    setInterval(writeCurrentTime, 1000);
-    setTimeout(() => {
-      window.MAIN_BOX.classList.add('grow-in');
-    }, 250);
-  });
-
-  function updatePercentsLeft() {
-    const NOW = new Date();
-
-    const CURRENT_DAY = NOW.getDay();
-    const TARGET_TIME = new Date();
-    const WORK_DAY_ENDS_HOURS = CURRENT_DAY === 5 ? 17 : 18
-    TARGET_TIME.setHours(WORK_DAY_ENDS_HOURS, 0, 0, 0);
-
-    const DIFF_MS = TARGET_TIME - NOW;
-    const DIFF_MS_TO_SEC = Math.floor(DIFF_MS / 1000);
-
-    let percentsLeft = 100 - (100 * DIFF_MS_TO_SEC / TOTAL_SECONDS);
-
-    if (percentsLeft > 0) {
-      percentsLeft = Number(percentsLeft.toFixed(0));
-    }
-
-    let bgColorClassLF = 'purple-light';
-    let colorClassLF = 'purple';
-
-    if (percentsLeft >= 0 && percentsLeft < 20) {
-      bgColorClassLF = 'red-light';
-      colorClassLF = 'red';
-    }
-
-    if (percentsLeft >= 20 && percentsLeft < 40) {
-      bgColorClassLF = 'deep-orange-light';
-      colorClassLF = 'deepOrange';
-    }
-
-    if (percentsLeft >= 40 && percentsLeft < 60) {
-      bgColorClassLF = 'orange-light';
-      colorClassLF = 'orange';
-    }
-
-    if (percentsLeft >= 60 && percentsLeft < 87) {
-      bgColorClassLF = 'yellow-light';
-      colorClassLF = 'yellow';
-    }
-
-    if (percentsLeft >= 87 && percentsLeft <= 100) {
-      bgColorClassLF = 'green-light';
-      colorClassLF = 'green';
-    }
-
-    if (percentsLeft === 87) {
-      if (!window.AUDIO_PLAYED) {
-        window.electronAPI.playSound();
-        window.AUDIO_PLAYED = true;
-      }
-    }
-
-    if (percentsLeft === 1) {
+      window.AUDIO = new Audio("assets/todo.wav");
       window.AUDIO_PLAYED = false;
-    }
 
-    window.NEW_PF_DIV.setAttribute('class', '');
-    window.NEW_PF_DIV.classList.add(bgColorClassLF);
-    window.TIME_DIV.setAttribute('class', '');
-    window.TIME_DIV.classList.add(colorClassLF);
-  }
-</script>
-</body>
+      const DAYS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+
+      const NOW = new Date();
+      const CURRENT_DAY = NOW.getDay();
+
+      const TOTAL_WORK_HOURS = CURRENT_DAY === 5 ? 8 : 9;
+
+      const TOTAL_SECONDS = TOTAL_WORK_HOURS * 60 * 60; // 9 часов (8 рабочих часов + 1 обеденных час)
+
+      const writeCurrentTimestamp = () => {
+        const TIMESTAMP_DIV = document.querySelector("#timestampDiv");
+        const TIMESTAMP = Math.floor(Date.now() / 1000);
+        TIMESTAMP_DIV.innerHTML = TIMESTAMP.toLocaleString("ru-RU");
+      };
+
+      const writeCurrentTime = () => {
+        const TIMESTAMP = new Date();
+        window.DAY_OF_WEEK_DIV.innerHTML = TIMESTAMP.toLocaleString("ru-RU", {
+          weekday: "short",
+        });
+        window.TIME_DIV.innerHTML = TIMESTAMP.toLocaleString("ru-RU", {
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+        });
+        window.DATE_DIV.innerHTML = TIMESTAMP.toLocaleString("ru-RU", {
+          year: "numeric",
+          month: "numeric",
+          day: "numeric",
+        });
+      };
+
+      const checkServersStatus = async () => {
+        const SITES = [
+          {
+            name: "PCL",
+            url: "https://patriot-cl.ru/",
+          },
+          {
+            name: "SHD",
+            url: "https://shvey-dom.ru/",
+          },
+          {
+            name: "RTR",
+            url: "https://rodiyartech.ru/",
+          },
+          {
+            name: "SNB",
+            url: "https://snb.group/",
+          },
+          {
+            name: "RTE",
+            url: "https://rodiyar.tech/",
+          },
+          {
+            name: "OHO",
+            url: "https://ohrana-objective.ru/",
+          },
+        ];
+
+        SITES.map(async (el) => {
+          const CURRENT_SITE = document.querySelector(`#${el.name}`);
+          if (CURRENT_SITE.classList.contains("green")) {
+            CURRENT_SITE.classList.remove("green");
+          }
+          if (CURRENT_SITE.classList.contains("red")) {
+            CURRENT_SITE.classList.remove("red");
+          }
+          CURRENT_SITE.classList.add("yellow");
+          const STATUS = await fetch(el.url, { method: "HEAD" });
+          CURRENT_SITE.classList.remove("yellow");
+          CURRENT_SITE.classList.add(STATUS.ok ? "green" : "red");
+        });
+      };
+
+      const updateTemperature = async () => {
+        const OUTDOOR_TEMP_RES = await fetch(
+          `https://api.weatherapi.com/v1/current.json?key=02a4a0e085aa4d95a1d90957251905&q=${LA},${LO}`,
+          {
+            method: "POST",
+          },
+        );
+
+        let outdoorTemp;
+        if (!OUTDOOR_TEMP_RES.ok) {
+          outdoorTemp = "Ошибка";
+        } else {
+          const OUTDOOR_TEMP_JSON = await OUTDOOR_TEMP_RES.json();
+          outdoorTemp = OUTDOOR_TEMP_JSON.current.temp_c.toFixed(0);
+        }
+
+        const INDOOR_TEMP_RES = await fetch(
+          "https://qjalti.ru/api/arduino/select",
+          {
+            method: "POST",
+          },
+        );
+
+        let indoorTemp;
+        if (!INDOOR_TEMP_RES.ok) {
+          indoorTemp = "Ошибка";
+        } else {
+          /**
+           * Объект с данными по температуре снаружи
+           * @const
+           * @type {Object} Объект с данными по температуре снаружи
+           */
+          const INDOOR_TEMP_JSON = await INDOOR_TEMP_RES.json();
+
+          if (INDOOR_TEMP_JSON.data.length) {
+            indoorTemp =
+              parseInt(INDOOR_TEMP_JSON.data[0].temperature) + "\u00B0C";
+          } else {
+            indoorTemp = "!DATA";
+          }
+        }
+
+        window.OUTDOOR_TEMP_VALUE.innerHTML = outdoorTemp + "\u00B0C";
+        window.INDOOR_TEMP_VALUE.innerHTML = indoorTemp;
+
+        /**
+         * Temperature text color
+         */
+        let outdoorTempColor;
+
+        if (outdoorTemp >= 25) {
+          outdoorTempColor = "rgba(183, 28, 28, 0.875)";
+        }
+
+        if (outdoorTemp <= 24) {
+          outdoorTempColor = "rgba(255, 152, 0, 0.875)";
+        }
+
+        if (outdoorTemp <= 23) {
+          outdoorTempColor = "rgba(255, 193, 7, 0.875)";
+        }
+
+        if (outdoorTemp <= 22) {
+          outdoorTempColor = "rgba(255, 235, 59, 0.875)";
+        }
+
+        if (outdoorTemp <= 21) {
+          outdoorTempColor = "rgba(139, 195, 74, 0.875)";
+        }
+
+        if (outdoorTemp <= 20) {
+          outdoorTempColor = "rgba(76, 175, 80, 0.875)";
+        }
+
+        if (outdoorTemp <= 19) {
+          outdoorTempColor = "rgba(0, 150, 136, 0.875)";
+        }
+
+        if (outdoorTemp <= 19) {
+          outdoorTempColor = "rgba(0, 188, 212, 0.875)";
+        }
+        if (outdoorTemp <= 9) {
+          outdoorTempColor = "rgba(3, 169, 244, 0.875)";
+        }
+        if (outdoorTemp <= 0) {
+          outdoorTempColor = "rgba(25, 118, 210, 0.875)";
+        }
+        if (outdoorTemp <= -10) {
+          outdoorTempColor = "rgba(21, 101, 192, 0.875)";
+        }
+        if (outdoorTemp <= -20) {
+          outdoorTempColor = "rgba(13, 71, 161, 0.875)";
+        }
+        window.OUTDOOR_TEMP_VALUE.style.color = outdoorTempColor;
+        window.OT_SVG.style.fill = outdoorTempColor;
+      };
+
+      const updateDayOfWeek = () => {
+        const NOW = new Date();
+
+        const DAY_OF_WEEK = DAYS[NOW.getDay()];
+
+        let colorClass;
+        let bgColorClass;
+
+        switch (NOW.getDay()) {
+          case 0:
+            colorClass = "green";
+            bgColorClass = "green-light";
+            break;
+          case 6:
+            colorClass = "green";
+            bgColorClass = "green-light";
+            break;
+          case 1:
+            colorClass = "red";
+            bgColorClass = "red-light";
+            break;
+          case 2:
+            colorClass = "deepOrange";
+            bgColorClass = "deep-orange-light";
+            break;
+          case 3:
+            colorClass = "orange";
+            bgColorClass = "orange-light";
+            break;
+          case 4:
+            colorClass = "yellow";
+            bgColorClass = "yellow-light";
+            break;
+          case 5:
+            colorClass = "green";
+            bgColorClass = "green-light";
+            break;
+        }
+
+        window.NEW_DOW_DIV.setAttribute("class", "");
+        window.NEW_DOW_DIV.classList.add(bgColorClass);
+        window.DAY_OF_WEEK_DIV.setAttribute("class", "");
+        window.DAY_OF_WEEK_DIV.classList.add(colorClass);
+      };
+
+      document.addEventListener("DOMContentLoaded", () => {
+        window.INDOOR_TEMP_VALUE = document.getElementById("indoorTemp");
+        window.OUTDOOR_TEMP_VALUE = document.getElementById("outdoorTemp");
+
+        window.STATUSES_BOX = document.getElementById("statusesBox");
+
+        window.NEW_BOX_DIV = document.getElementById("new-box");
+        window.NEW_DOW_DIV = document.getElementById("new-DoW");
+        window.NEW_PF_DIV = document.getElementById("new-PF");
+
+        window.REFRESH_BTN = document.querySelector("#refreshBtn");
+
+        window.OT_SVG = document.querySelector(".outdoor-temperature-svg");
+
+        window.REFRESH_BTN.addEventListener("click", () => {
+          checkServersStatus();
+          updateDayOfWeek();
+          updateTemperature();
+          updatePercentsLeft();
+          window.MAIN_BOX.classList.remove("grow-in");
+          setTimeout(() => {
+            window.MAIN_BOX.classList.add("grow-in");
+          }, 1000);
+        });
+
+        window.DAY_OF_WEEK_DIV = document.querySelector("#dayOfWeekDiv");
+        window.TIME_DIV = document.querySelector("#timeDiv");
+        window.DATE_DIV = document.querySelector("#dateDiv");
+
+        window.MAIN_BOX = document.querySelector("#mainBox");
+
+        updateDayOfWeek();
+        updatePercentsLeft();
+        updateTemperature();
+        checkServersStatus();
+        writeCurrentTimestamp();
+        writeCurrentTime();
+        setInterval(updateDayOfWeek, 4 * 60 * 60 * 1000); // every 4 hours
+        setInterval(updatePercentsLeft, 1000);
+        setInterval(updateTemperature, 1000 * 60 * 15);
+        setInterval(checkServersStatus, SITE_STATUSES_UPDATE_TIMEOUT);
+        setInterval(writeCurrentTimestamp, 1000);
+        setInterval(writeCurrentTime, 1000);
+        setTimeout(() => {
+          window.MAIN_BOX.classList.add("grow-in");
+        }, 250);
+      });
+
+      function updatePercentsLeft() {
+        const NOW = new Date();
+
+        const CURRENT_DAY = NOW.getDay();
+        const TARGET_TIME = new Date();
+        const WORK_DAY_ENDS_HOURS = CURRENT_DAY === 5 ? 17 : 18;
+        TARGET_TIME.setHours(WORK_DAY_ENDS_HOURS, 0, 0, 0);
+
+        const DIFF_MS = TARGET_TIME - NOW;
+        const DIFF_MS_TO_SEC = Math.floor(DIFF_MS / 1000);
+
+        let percentsLeft = 100 - (100 * DIFF_MS_TO_SEC) / TOTAL_SECONDS;
+
+        if (percentsLeft > 0) {
+          percentsLeft = Number(percentsLeft.toFixed(0));
+        }
+
+        let bgColorClassLF = "purple-light";
+        let colorClassLF = "purple";
+
+        if (percentsLeft >= 0 && percentsLeft < 20) {
+          bgColorClassLF = "red-light";
+          colorClassLF = "red";
+        }
+
+        if (percentsLeft >= 20 && percentsLeft < 40) {
+          bgColorClassLF = "deep-orange-light";
+          colorClassLF = "deepOrange";
+        }
+
+        if (percentsLeft >= 40 && percentsLeft < 60) {
+          bgColorClassLF = "orange-light";
+          colorClassLF = "orange";
+        }
+
+        if (percentsLeft >= 60 && percentsLeft < 87) {
+          bgColorClassLF = "yellow-light";
+          colorClassLF = "yellow";
+        }
+
+        if (percentsLeft >= 87 && percentsLeft <= 100) {
+          bgColorClassLF = "green-light";
+          colorClassLF = "green";
+        }
+
+        if (percentsLeft === 87) {
+          if (!window.AUDIO_PLAYED) {
+            window.electronAPI.playSound();
+            window.AUDIO_PLAYED = true;
+          }
+        }
+
+        if (percentsLeft === 1) {
+          window.AUDIO_PLAYED = false;
+        }
+
+        window.NEW_PF_DIV.setAttribute("class", "");
+        window.NEW_PF_DIV.classList.add(bgColorClassLF);
+        window.TIME_DIV.setAttribute("class", "");
+        window.TIME_DIV.classList.add(colorClassLF);
+      }
+    </script>
+  </body>
 </html>
