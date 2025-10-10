@@ -19,7 +19,7 @@ let tray = null;
 
 app.whenReady().then(() => {
   win = new BrowserWindow({
-    width: 916,
+    width: 928,
     height: 32,
     // width: 1920,
     // height: 1080,
