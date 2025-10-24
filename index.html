@@ -42,7 +42,7 @@
         font-size: 12px;
         margin: 0;
         color: rgba(255, 255, 255, 0.625);
-        width: 928px;
+        width: 628px;
         height: 32px !important;
         user-select: none;
       }
@@ -390,15 +390,6 @@
         </div>
         <div id="temperatureValue"></div>
       </div>
-      <div id="statusesBox">
-        <span id="PAT" class="site yellow">PAT</span>
-        <span id="SHV" class="site yellow">SHV</span>
-        <span id="RTR" class="site yellow">RTR</span>
-        <span id="SNB" class="site yellow">SNB</span>
-        <span id="RTE" class="site yellow">RTE</span>
-        <span id="OHO" class="site yellow">OHO</span>
-      </div>
-      ::
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 -960 960 960"
@@ -443,8 +434,6 @@
       const LA = "55.81160";
       const LO = "37.79113";
 
-      const SITE_STATUSES_UPDATE_TIMEOUT = 1000 * 60 * 5;
-
       window.AUDIO = new Audio("assets/todo.wav");
       window.AUDIO_PLAYED = false;
 
@@ -477,49 +466,6 @@
           year: "numeric",
           month: "numeric",
           day: "numeric",
-        });
-      };
-
-      const checkServersStatus = async () => {
-        const SITES = [
-          {
-            name: "PAT",
-            url: "https://patriot-cl.ru/",
-          },
-          {
-            name: "SHV",
-            url: "https://shvey-dom.ru/",
-          },
-          {
-            name: "RTR",
-            url: "https://rodiyartech.ru/",
-          },
-          {
-            name: "SNB",
-            url: "https://snb.group/",
-          },
-          {
-            name: "RTE",
-            url: "https://rodiyar.tech/",
-          },
-          {
-            name: "OHO",
-            url: "https://ohrana-objective.ru/",
-          },
-        ];
-
-        SITES.map(async (el) => {
-          const CURRENT_SITE = document.querySelector(`#${el.name}`);
-          if (CURRENT_SITE.classList.contains("green")) {
-            CURRENT_SITE.classList.remove("green");
-          }
-          if (CURRENT_SITE.classList.contains("red")) {
-            CURRENT_SITE.classList.remove("red");
-          }
-          CURRENT_SITE.classList.add("yellow");
-          const STATUS = await fetch(el.url, { method: "HEAD" });
-          CURRENT_SITE.classList.remove("yellow");
-          CURRENT_SITE.classList.add(STATUS.ok ? "green" : "red");
         });
       };
 
@@ -668,8 +614,6 @@
         window.OUTDOOR_TEMP_VALUE = document.getElementById("outdoorTemp");
         window.CLOSE_BTN = document.getElementById("closeBtn");
 
-        window.STATUSES_BOX = document.getElementById("statusesBox");
-
         window.NEW_BOX_DIV = document.getElementById("new-box");
         window.NEW_DOW_DIV = document.getElementById("new-DoW");
         window.NEW_PF_DIV = document.getElementById("new-PF");
@@ -679,7 +623,6 @@
         window.OT_SVG = document.querySelector(".outdoor-temperature-svg");
 
         window.REFRESH_BTN.addEventListener("click", () => {
-          checkServersStatus();
           updateDayOfWeek();
           updateTemperature();
           updatePercentsLeft();
@@ -710,13 +653,11 @@
         updateDayOfWeek();
         updatePercentsLeft();
         updateTemperature();
-        checkServersStatus();
         writeCurrentTimestamp();
         writeCurrentTime();
         setInterval(updateDayOfWeek, 4 * 60 * 60 * 1000); // every 4 hours
         setInterval(updatePercentsLeft, 1000);
         setInterval(updateTemperature, 1000 * 60 * 15);
-        setInterval(checkServersStatus, SITE_STATUSES_UPDATE_TIMEOUT);
         setInterval(writeCurrentTimestamp, 1000);
         setInterval(writeCurrentTime, 1000);
         setTimeout(() => {
