@@ -32,10 +32,10 @@ Pack project:
 npm run build
 ```
 
-Format code with `prettier`
+Format code with `prettier` and `eslint`
 
 ```bash
-npm run pformat
+npm run epf
 ```
 
 ### npm run build description
