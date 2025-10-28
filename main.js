@@ -19,10 +19,10 @@ let tray = null;
 
 app.whenReady().then(() => {
   win = new BrowserWindow({
-    // width: 628,
-    // height: 32,
-    width: 1920,
-    height: 1080,
+    width: 628,
+    height: 32,
+    // width: 1920,
+    // height: 1080,
     frame: false,
     alwaysOnTop: true,
     transparent: true,
@@ -39,7 +39,7 @@ app.whenReady().then(() => {
       preload: PATH.join(__dirname, "preload.js"),
     },
   });
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
 
   tray = new Tray(nativeImage.createFromPath(PATH_TO_TRAY_ICON));
 
