@@ -11,7 +11,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Информационная панель, отображающая текущее время, дату, день недели, а также температуру на улице и в помещении (через Arduino-датчик). Визуально подсвечивает день недели плавной цветовой шкалой — от красного (утро в начале недели) до зелёного (ближе к выходным или концу рабочего дня) — помогая интуитивно ощущать течение рабочей недели.",
   "devDependencies": {
     "@eslint/js": "^9.37.0",
     "electron": "^34.0.1",
@@ -34,6 +34,11 @@
       "target": "nsis",
       "icon": "assets/icon.ico"
     },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false
+    },
     "compression": "maximum",
     "asar": true,
     "files": [
@@ -44,7 +49,9 @@
       "!node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme,test,__tests__,tests,powered-test,example,examples}",
       "!node_modules/.bin",
       "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}",
-      "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS}"
+      "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS}",
+      "css/**/*",
+      "js/**/*"
     ]
   }
 }
