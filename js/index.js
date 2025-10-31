@@ -265,13 +265,13 @@ function updatePercentsLeft() {
   let showLottieContainer = false;
   let lottieClass = "error";
 
-  if (percentsLeft >= 0 && percentsLeft <= 100) {
-    showSettingsIcon = true;
+  if (percentsLeft > 100) {
+    showLottieContainer = true;
     lottieClass = "success";
   }
 
-  if (percentsLeft < 0 || percentsLeft >= 100) {
-    showLottieContainer = true;
+  if (percentsLeft <= 100) {
+    showSettingsIcon = true;
   }
 
   if (percentsLeft >= 0 && percentsLeft < 20) {
