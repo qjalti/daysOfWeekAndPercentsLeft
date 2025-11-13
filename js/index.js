@@ -4,7 +4,6 @@
 const LA = "55.81160";
 const LO = "37.79113";
 
-window.AUDIO = new Audio("assets/todo.wav");
 window.AUDIO_PLAYED = false;
 
 const DAYS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
@@ -299,14 +298,14 @@ function updatePercentsLeft() {
     colorClassLF = "green";
   }
 
-  if (percentsLeft === 87) {
+  if (percentsLeft >= 85 && percentsLeft <= 88) {
     if (!window.AUDIO_PLAYED) {
       window.electronAPI.playSound();
       window.AUDIO_PLAYED = true;
     }
   }
 
-  if (percentsLeft === 1) {
+  if (percentsLeft >= 1 && percentsLeft <= 3) {
     window.AUDIO_PLAYED = false;
   }
 
