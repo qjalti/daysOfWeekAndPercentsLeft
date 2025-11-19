@@ -53,7 +53,8 @@
       "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}",
       "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS}",
       "css/**/*",
-      "js/**/*"
+      "js/**/*",
+      "assets/**/*"
     ]
   }
 }
