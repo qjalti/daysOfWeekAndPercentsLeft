@@ -96,12 +96,19 @@ ipcMain.on("play-sound", () => {
 });
 
 const playSound = () => {
-  const soundPath = PATH.join(__dirname, "assets/todo.wav");
+  const soundPath = app.isPackaged
+    ? PATH.join(
+        process.resourcesPath,
+        "app.asar.unpacked",
+        "assets",
+        "todo.wav",
+      )
+    : PATH.join(__dirname, "assets", "todo.wav");
 
   if (process.platform === "win32") {
-    player
-      .play({ path: soundPath })
-      .catch((err) => alert("ErrorCode 455. " + err));
+    player.play({ path: soundPath }).catch((err) => {
+      console.error("Ошибка воспроизведения звука:", err);
+    });
   } else if (process.platform === "darwin") {
     exec(`afplay "${soundPath}"`);
   } else {

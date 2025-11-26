@@ -41,6 +41,9 @@
     },
     "compression": "maximum",
     "asar": true,
+    "asarUnpack": [
+      "assets/todo.wav"
+    ],
     "files": [
       "main.js",
       "index.html",
