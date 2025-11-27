@@ -269,6 +269,7 @@ function updatePercentsLeft() {
   }
 
   if (percentsLeft > 100) {
+    showLottieContainer = true;
     lottieClass = "success";
   }
 
