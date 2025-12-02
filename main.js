@@ -40,7 +40,7 @@ app.whenReady().then(() => {
   });
   // win.webContents.openDevTools();
 
-  tray = new Tray(nativeImage.createFromPath(PATH_TO_TRAY_ICON));
+  tray = new Tray(PATH.join(__dirname, PATH_TO_TRAY_ICON));
 
   const CONTEXT_MENU = Menu.buildFromTemplate([
     {
