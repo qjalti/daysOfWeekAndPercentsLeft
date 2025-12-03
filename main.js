@@ -24,7 +24,7 @@ app.whenReady().then(() => {
     // width: 1920,
     // height: 1080,
     frame: false,
-    alwaysOnTop: true,
+    alwaysOnTop: false,
     transparent: true,
     resizable: false,
     hasShadow: false,
@@ -40,11 +40,18 @@ app.whenReady().then(() => {
   });
   // win.webContents.openDevTools();
 
+  win.setAlwaysOnTop(true, "screen-saver");
+
+  win.on("hide", () => {
+    win.setAlwaysOnTop(true, "screen-saver");
+    win.show();
+  });
+
   tray = new Tray(PATH.join(__dirname, PATH_TO_TRAY_ICON));
 
   const CONTEXT_MENU = Menu.buildFromTemplate([
     {
-      label: "Exit",
+      label: "Закрыть",
       type: "normal",
       click: () => {
         app.quit();
@@ -52,7 +59,7 @@ app.whenReady().then(() => {
     },
   ]);
 
-  tray.setToolTip("daysOfWeekAndPercentsLeft");
+  tray.setToolTip("Инфо-панель Кьялти");
   tray.setContextMenu(CONTEXT_MENU);
 
   win.webContents.on("before-input-event", (event, input) => {
