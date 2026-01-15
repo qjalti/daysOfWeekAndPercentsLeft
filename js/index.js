@@ -6,8 +6,6 @@ const LO = "37.79113";
 
 window.AUDIO_PLAYED = false;
 
-const DAYS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-
 const NOW = new Date();
 const CURRENT_DAY = NOW.getDay();
 
