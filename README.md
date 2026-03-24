@@ -29,7 +29,7 @@ npm install electron-packager -g
 Pack project:
 
 ```bash
-npm run build
+npm run e-build
 ```
 
 Format code with `prettier` and `eslint`

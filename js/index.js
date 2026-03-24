@@ -13,6 +13,29 @@ const TOTAL_WORK_HOURS = CURRENT_DAY === 5 ? 8 : 9;
 
 const TOTAL_SECONDS = TOTAL_WORK_HOURS * 60 * 60; // 9 часов (8 рабочих часов + 1 обеденных час)
 
+const getTimeUntil = () => {
+  const now = new Date();
+  const target = new Date();
+
+  target.setHours(18, 0, 0, 0);
+
+  if (now > target) {
+    target.setDate(target.getDate() + 1);
+  }
+
+  const diff = target - now;
+
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+
+  const h = String(hours).padStart(2, "0");
+  const m = String(minutes).padStart(2, "0");
+  const s = String(seconds).padStart(2, "0");
+
+  window.REMAINING_TIME_VALUE.innerText = `${h}:${m}:${s}`;
+};
+
 const writeCurrentTimestamp = () => {
   const TIMESTAMP_DIV = document.querySelector("#timestampDiv");
   const TIMESTAMP = Math.floor(Date.now() / 1000);
@@ -175,6 +198,7 @@ const updateDayOfWeek = () => {
 document.addEventListener("DOMContentLoaded", () => {
   window.INDOOR_TEMP_VALUE = document.getElementById("indoorTemp");
   window.OUTDOOR_TEMP_VALUE = document.getElementById("outdoorTemp");
+  window.REMAINING_TIME_VALUE = document.getElementById("remaining");
   window.CLOSE_BTN = document.getElementById("closeBtn");
 
   window.NEW_BOX_DIV = document.getElementById("new-box");
@@ -226,6 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(updateTemperature, 1000 * 60 * 15);
   setInterval(writeCurrentTimestamp, 1000);
   setInterval(writeCurrentTime, 1000);
+  setInterval(getTimeUntil, 1000);
   setTimeout(() => {
     window.MAIN_BOX.classList.add("grow-in");
   }, 250);
