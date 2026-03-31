@@ -1,39 +1,48 @@
-// const LA = '55.80852';
-// const LO = '37.70758';
-
 const LA = "55.81160";
 const LO = "37.79113";
 
 window.AUDIO_PLAYED = false;
 
-const NOW = new Date();
-const CURRENT_DAY = NOW.getDay();
+const AUDIO_TRIGGER_MAX = 88;
+const AUDIO_TRIGGER_MIN = 85;
+const AUDIO_RESET_MAX = 3;
+const TEMP_UPDATE_INTERVAL_MS = 1000 * 60 * 15;
 
-const TOTAL_WORK_HOURS = CURRENT_DAY === 5 ? 8 : 9;
+const getEndHour = () => (new Date().getDay() === 5 ? 17 : 18);
 
-const TOTAL_SECONDS = TOTAL_WORK_HOURS * 60 * 60; // 9 часов (8 рабочих часов + 1 обеденных час)
+const msUntilMidnight = () => {
+  const now = new Date();
+  const midnight = new Date(now);
+  midnight.setHours(24, 0, 0, 0);
+  return midnight - now;
+};
 
 const getTimeUntil = () => {
   const now = new Date();
-  const target = new Date();
+  const endHour = getEndHour();
 
-  target.setHours(18, 0, 0, 0);
+  const end = new Date(now);
+  end.setHours(endHour, 0, 0, 0);
 
-  if (now > target) {
-    target.setDate(target.getDate() + 1);
+  if (now > end) {
+    window.REMAINING_TIME_VALUE.innerText = "--:--:--";
+    return;
   }
 
-  const diff = target - now;
+  const lunch = new Date(now);
+  lunch.setHours(13, 0, 0, 0);
 
-  const hours = Math.floor(diff / (1000 * 60 * 60));
-  const minutes = Math.floor((diff / (1000 * 60)) % 60);
-  const seconds = Math.floor((diff / 1000) % 60);
+  const fmt = (ms) => {
+    if (ms <= 0) return "00:00:00";
+    const h = Math.floor(ms / 3_600_000);
+    const m = Math.floor((ms % 3_600_000) / 60_000);
+    const s = Math.floor((ms % 60_000) / 1_000);
+    return [h, m, s].map((n) => String(n).padStart(2, "0")).join(":");
+  };
 
-  const h = String(hours).padStart(2, "0");
-  const m = String(minutes).padStart(2, "0");
-  const s = String(seconds).padStart(2, "0");
+  const lunchPart = lunch - now > 0 ? ` :: ${fmt(lunch - now)}` : "";
 
-  window.REMAINING_TIME_VALUE.innerText = `${h}:${m}:${s}`;
+  window.REMAINING_TIME_VALUE.innerText = `${fmt(end - now)}${lunchPart}`;
 };
 
 const writeCurrentTimestamp = () => {
@@ -62,9 +71,7 @@ const writeCurrentTime = () => {
 const updateTemperature = async () => {
   const OUTDOOR_TEMP_RES = await fetch(
     `https://api.weatherapi.com/v1/current.json?key=02a4a0e085aa4d95a1d90957251905&q=${LA},${LO}`,
-    {
-      method: "POST",
-    },
+    { method: "GET" },
   );
 
   let outdoorTemp;
@@ -83,11 +90,6 @@ const updateTemperature = async () => {
   if (!INDOOR_TEMP_RES.ok) {
     indoorTemp = "Ошибка";
   } else {
-    /**
-     * Объект с данными по температуре снаружи
-     * @const
-     * @type {Object} Объект с данными по температуре снаружи
-     */
     const INDOOR_TEMP_JSON = await INDOOR_TEMP_RES.json();
 
     if (INDOOR_TEMP_JSON.data.length) {
@@ -100,54 +102,20 @@ const updateTemperature = async () => {
   window.OUTDOOR_TEMP_VALUE.innerHTML = outdoorTemp + "\u00B0C";
   window.INDOOR_TEMP_VALUE.innerHTML = indoorTemp;
 
-  /**
-   * Temperature text color
-   */
   let outdoorTempColor;
 
-  if (outdoorTemp >= 25) {
-    outdoorTempColor = "rgba(183, 28, 28, 0.875)";
-  }
+  if (outdoorTemp >= 25) outdoorTempColor = "rgba(183, 28, 28, 0.875)";
+  if (outdoorTemp <= 24) outdoorTempColor = "rgba(255, 152, 0, 0.875)";
+  if (outdoorTemp <= 23) outdoorTempColor = "rgba(255, 193, 7, 0.875)";
+  if (outdoorTemp <= 22) outdoorTempColor = "rgba(255, 235, 59, 0.875)";
+  if (outdoorTemp <= 21) outdoorTempColor = "rgba(139, 195, 74, 0.875)";
+  if (outdoorTemp <= 20) outdoorTempColor = "rgba(76, 175, 80, 0.875)";
+  if (outdoorTemp <= 19) outdoorTempColor = "rgba(0, 188, 212, 0.875)";
+  if (outdoorTemp <= 9) outdoorTempColor = "rgba(3, 169, 244, 0.875)";
+  if (outdoorTemp <= 0) outdoorTempColor = "rgba(25, 118, 210, 0.875)";
+  if (outdoorTemp <= -10) outdoorTempColor = "rgba(21, 101, 192, 0.875)";
+  if (outdoorTemp <= -20) outdoorTempColor = "rgba(13, 71, 161, 0.875)";
 
-  if (outdoorTemp <= 24) {
-    outdoorTempColor = "rgba(255, 152, 0, 0.875)";
-  }
-
-  if (outdoorTemp <= 23) {
-    outdoorTempColor = "rgba(255, 193, 7, 0.875)";
-  }
-
-  if (outdoorTemp <= 22) {
-    outdoorTempColor = "rgba(255, 235, 59, 0.875)";
-  }
-
-  if (outdoorTemp <= 21) {
-    outdoorTempColor = "rgba(139, 195, 74, 0.875)";
-  }
-
-  if (outdoorTemp <= 20) {
-    outdoorTempColor = "rgba(76, 175, 80, 0.875)";
-  }
-
-  if (outdoorTemp <= 19) {
-    outdoorTempColor = "rgba(0, 150, 136, 0.875)";
-  }
-
-  if (outdoorTemp <= 19) {
-    outdoorTempColor = "rgba(0, 188, 212, 0.875)";
-  }
-  if (outdoorTemp <= 9) {
-    outdoorTempColor = "rgba(3, 169, 244, 0.875)";
-  }
-  if (outdoorTemp <= 0) {
-    outdoorTempColor = "rgba(25, 118, 210, 0.875)";
-  }
-  if (outdoorTemp <= -10) {
-    outdoorTempColor = "rgba(21, 101, 192, 0.875)";
-  }
-  if (outdoorTemp <= -20) {
-    outdoorTempColor = "rgba(13, 71, 161, 0.875)";
-  }
   window.OUTDOOR_TEMP_VALUE.style.color = outdoorTempColor;
   window.OT_SVG.style.fill = outdoorTempColor;
 };
@@ -206,7 +174,6 @@ document.addEventListener("DOMContentLoaded", () => {
   window.NEW_PF_DIV = document.getElementById("new-PF");
 
   window.REFRESH_BTN = document.querySelector("#refreshBtn");
-
   window.OT_SVG = document.querySelector(".outdoor-temperature-svg");
 
   window.REFRESH_BTN.addEventListener("click", () => {
@@ -226,7 +193,6 @@ document.addEventListener("DOMContentLoaded", () => {
     ) {
       window.electronAPI.closeWindow();
     } else {
-      // Fallback: если запущено не в Electron (например, в браузере)
       window.close();
     }
   });
@@ -245,12 +211,19 @@ document.addEventListener("DOMContentLoaded", () => {
   updateTemperature().then(() => false);
   writeCurrentTimestamp();
   writeCurrentTime();
-  setInterval(updateDayOfWeek, 4 * 60 * 60 * 1000); // every 4 hours
+  getTimeUntil();
+
+  setTimeout(() => {
+    updateDayOfWeek();
+    setInterval(updateDayOfWeek, 24 * 60 * 60 * 1000);
+  }, msUntilMidnight());
+
   setInterval(updatePercentsLeft, 1000);
-  setInterval(updateTemperature, 1000 * 60 * 15);
+  setInterval(updateTemperature, TEMP_UPDATE_INTERVAL_MS);
   setInterval(writeCurrentTimestamp, 1000);
   setInterval(writeCurrentTime, 1000);
   setInterval(getTimeUntil, 1000);
+
   setTimeout(() => {
     window.MAIN_BOX.classList.add("grow-in");
   }, 250);
@@ -266,11 +239,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function updatePercentsLeft() {
   const NOW = new Date();
+  const endHour = getEndHour();
+  const TOTAL_SECONDS = (endHour === 17 ? 8 : 9) * 3600;
 
-  const CURRENT_DAY = NOW.getDay();
   const TARGET_TIME = new Date();
-  const WORK_DAY_ENDS_HOURS = CURRENT_DAY === 5 ? 17 : 18;
-  TARGET_TIME.setHours(WORK_DAY_ENDS_HOURS, 0, 0, 0);
+  TARGET_TIME.setHours(endHour, 0, 0, 0);
 
   const DIFF_MS = TARGET_TIME - NOW;
   const DIFF_MS_TO_SEC = Math.floor(DIFF_MS / 1000);
@@ -287,18 +260,14 @@ function updatePercentsLeft() {
   let showLottieContainer = false;
   let lottieClass = "error";
 
-  if (percentsLeft < 0) {
-    showLottieContainer = true;
-  }
+  if (percentsLeft < 0) showLottieContainer = true;
 
   if (percentsLeft > 100) {
     showLottieContainer = true;
     lottieClass = "success";
   }
 
-  if (percentsLeft >= 0 && percentsLeft <= 100) {
-    showSettingsIcon = true;
-  }
+  if (percentsLeft >= 0 && percentsLeft <= 100) showSettingsIcon = true;
 
   if (percentsLeft >= 0 && percentsLeft < 20) {
     bgColorClassLF = "red-light";
@@ -325,14 +294,14 @@ function updatePercentsLeft() {
     colorClassLF = "green";
   }
 
-  if (percentsLeft >= 85 && percentsLeft <= 88) {
+  if (percentsLeft >= AUDIO_TRIGGER_MIN && percentsLeft <= AUDIO_TRIGGER_MAX) {
     if (!window.AUDIO_PLAYED) {
       window.electronAPI.playSound();
       window.AUDIO_PLAYED = true;
     }
   }
 
-  if (percentsLeft >= 1 && percentsLeft <= 3) {
+  if (percentsLeft >= 1 && percentsLeft <= AUDIO_RESET_MAX) {
     window.AUDIO_PLAYED = false;
   }
 

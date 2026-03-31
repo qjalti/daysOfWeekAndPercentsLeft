@@ -7,22 +7,21 @@ const {
   ipcMain,
 } = require("electron");
 
-const PATH = require("path");
+const path = require("path");
 const { exec } = require("child_process");
 const player = require("node-wav-player");
 
 const PATH_TO_ICON = "./assets/icon.ico";
 const PATH_TO_TRAY_ICON = "./assets/tray_icon.ico";
+const ARROW_STEP = 1;
 
 let win;
 let tray = null;
 
 app.whenReady().then(() => {
   win = new BrowserWindow({
-    width: 730,
+    width: 800,
     height: 32,
-    // width: 1920,
-    // height: 1080,
     frame: false,
     alwaysOnTop: false,
     transparent: true,
@@ -35,19 +34,13 @@ app.whenReady().then(() => {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: true,
-      preload: PATH.join(__dirname, "preload.js"),
+      preload: path.join(__dirname, "preload.js"),
     },
   });
-  // win.webContents.openDevTools();
 
   win.setAlwaysOnTop(true, "screen-saver");
 
-  win.on("hide", () => {
-    win.setAlwaysOnTop(true, "screen-saver");
-    win.show();
-  });
-
-  tray = new Tray(PATH.join(__dirname, PATH_TO_TRAY_ICON));
+  tray = new Tray(path.join(__dirname, PATH_TO_TRAY_ICON));
 
   const CONTEXT_MENU = Menu.buildFromTemplate([
     {
@@ -63,38 +56,39 @@ app.whenReady().then(() => {
   tray.setContextMenu(CONTEXT_MENU);
 
   win.webContents.on("before-input-event", (event, input) => {
-    const step = 1;
+    if (input.type !== "keyDown") return;
+
     const bounds = win.getBounds();
 
-    if (input.type === "keyDown") {
-      switch (input.key) {
-        case "ArrowLeft":
-          win.setBounds({ x: bounds.x - step, y: bounds.y });
-          break;
-        case "ArrowRight":
-          win.setBounds({ x: bounds.x + step, y: bounds.y });
-          break;
-        case "ArrowUp":
-          win.setBounds({ x: bounds.x, y: bounds.y - step });
-          break;
-        case "ArrowDown":
-          win.setBounds({ x: bounds.x, y: bounds.y + step });
-          break;
-      }
-    }
-
-    if (input.type === "keyDown" && input.key === "Escape") {
-      win.close();
+    switch (input.key) {
+      case "ArrowLeft":
+        win.setBounds({ x: bounds.x - ARROW_STEP, y: bounds.y });
+        break;
+      case "ArrowRight":
+        win.setBounds({ x: bounds.x + ARROW_STEP, y: bounds.y });
+        break;
+      case "ArrowUp":
+        win.setBounds({ x: bounds.x, y: bounds.y - ARROW_STEP });
+        break;
+      case "ArrowDown":
+        win.setBounds({ x: bounds.x, y: bounds.y + ARROW_STEP });
+        break;
+      case "Escape":
+        win.close();
+        break;
     }
   });
 
-  win.loadFile("index.html").then(() => false);
+  win.loadFile("index.html");
+});
+
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") app.quit();
 });
 
 ipcMain.on("close-window", (event) => {
-  const webContents = event.sender;
-  const win = BrowserWindow.fromWebContents(webContents);
-  if (win) win.close();
+  const targetWin = BrowserWindow.fromWebContents(event.sender);
+  if (targetWin) targetWin.close();
 });
 
 ipcMain.on("play-sound", () => {
@@ -103,21 +97,25 @@ ipcMain.on("play-sound", () => {
 
 const playSound = () => {
   const soundPath = app.isPackaged
-    ? PATH.join(
+    ? path.join(
         process.resourcesPath,
         "app.asar.unpacked",
         "assets",
         "todo.wav",
       )
-    : PATH.join(__dirname, "assets", "todo.wav");
+    : path.join(__dirname, "assets", "todo.wav");
 
   if (process.platform === "win32") {
     player.play({ path: soundPath }).catch((err) => {
       console.error("Ошибка воспроизведения звука:", err);
     });
   } else if (process.platform === "darwin") {
-    exec(`afplay "${soundPath}"`);
+    exec(`afplay "${soundPath}"`, (err) => {
+      if (err) console.error("Ошибка воспроизведения звука:", err);
+    });
   } else {
-    exec(`aplay "${soundPath}"`);
+    exec(`aplay "${soundPath}"`, (err) => {
+      if (err) console.error("Ошибка воспроизведения звука:", err);
+    });
   }
 };
