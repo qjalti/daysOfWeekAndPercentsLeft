@@ -3,9 +3,6 @@ const LO = "37.79113";
 
 window.AUDIO_PLAYED = false;
 
-const AUDIO_TRIGGER_MAX = 88;
-const AUDIO_TRIGGER_MIN = 85;
-const AUDIO_RESET_MAX = 3;
 const TEMP_UPDATE_INTERVAL_MS = 1000 * 60 * 15;
 
 const getEndHour = () => (new Date().getDay() === 5 ? 17 : 18);
@@ -248,6 +245,9 @@ function updatePercentsLeft() {
   const DIFF_MS = TARGET_TIME - NOW;
   const DIFF_MS_TO_SEC = Math.floor(DIFF_MS / 1000);
 
+  // Сколько целых минут осталось до конца рабочего дня
+  const REMAINING_MINUTES = Math.floor(DIFF_MS_TO_SEC / 60);
+
   let percentsLeft = 100 - (100 * DIFF_MS_TO_SEC) / TOTAL_SECONDS;
 
   if (percentsLeft > 0) {
@@ -294,14 +294,17 @@ function updatePercentsLeft() {
     colorClassLF = "green";
   }
 
-  if (percentsLeft >= AUDIO_TRIGGER_MIN && percentsLeft <= AUDIO_TRIGGER_MAX) {
+  // Звук играет ровно когда остаётся 1 час (60 минут) до конца дня
+  if (REMAINING_MINUTES === 60) {
     if (!window.AUDIO_PLAYED) {
       window.electronAPI.playSound();
       window.AUDIO_PLAYED = true;
     }
   }
 
-  if (percentsLeft >= 1 && percentsLeft <= AUDIO_RESET_MAX) {
+  // Сброс флага через несколько минут после срабатывания,
+  // чтобы на следующий день звук снова сработал
+  if (REMAINING_MINUTES <= 57 && REMAINING_MINUTES >= 0) {
     window.AUDIO_PLAYED = false;
   }
 
