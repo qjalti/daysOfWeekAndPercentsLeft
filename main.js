@@ -22,6 +22,8 @@ app.whenReady().then(() => {
   win = new BrowserWindow({
     width: 808,
     height: 32,
+    // width: 1920,
+    // height: 1080,
     frame: false,
     alwaysOnTop: false,
     transparent: true,
@@ -37,7 +39,7 @@ app.whenReady().then(() => {
       preload: path.join(__dirname, "preload.js"),
     },
   });
-
+  // win.webContents.openDevTools()
   win.setAlwaysOnTop(true, "screen-saver");
 
   tray = new Tray(path.join(__dirname, PATH_TO_TRAY_ICON));

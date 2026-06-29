@@ -245,8 +245,7 @@ function updatePercentsLeft() {
   const DIFF_MS = TARGET_TIME - NOW;
   const DIFF_MS_TO_SEC = Math.floor(DIFF_MS / 1000);
 
-  // Сколько целых минут осталось до конца рабочего дня
-  const REMAINING_MINUTES = Math.floor(DIFF_MS_TO_SEC / 60);
+  const REMAINING_SECONDS = Math.floor(DIFF_MS_TO_SEC);
 
   let percentsLeft = 100 - (100 * DIFF_MS_TO_SEC) / TOTAL_SECONDS;
 
@@ -295,7 +294,7 @@ function updatePercentsLeft() {
   }
 
   // Звук играет ровно когда остаётся 1 час (60 минут) до конца дня
-  if (REMAINING_MINUTES === 60) {
+  if (REMAINING_SECONDS === 3600) {
     if (!window.AUDIO_PLAYED) {
       window.electronAPI.playSound();
       window.AUDIO_PLAYED = true;
@@ -304,7 +303,7 @@ function updatePercentsLeft() {
 
   // Сброс флага через несколько минут после срабатывания,
   // чтобы на следующий день звук снова сработал
-  if (REMAINING_MINUTES <= 57 && REMAINING_MINUTES >= 0) {
+  if (REMAINING_SECONDS <= 3360 && REMAINING_SECONDS >= 0) {
     window.AUDIO_PLAYED = false;
   }
 
